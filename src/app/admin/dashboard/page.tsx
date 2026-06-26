@@ -182,7 +182,7 @@ function StatCard({
     <div className="card p-6">
       <p
         className={`text-4xl font-black ${
-          accent ? "text-accent-500" : "text-brand-700"
+          accent ? "text-accent-600" : "text-brand-700"
         }`}
       >
         {value}

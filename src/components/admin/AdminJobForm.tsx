@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/slug";
+import RichTextEditor from "./RichTextEditor";
 import {
   CATEGORIES,
   DEPARTMENTS,
@@ -84,7 +85,12 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
     if (!form.unit?.trim()) return "A unidade é obrigatória.";
     if (!form.location.trim()) return "O local é obrigatório.";
     if (!form.status) return "O status é obrigatório.";
-    if (!form.description?.trim()) return "A descrição é obrigatória.";
+    if (isProfessor) {
+      if (!form.description?.trim())
+        return "A descrição da vaga é obrigatória.";
+    } else if (!form.responsibilities?.trim()) {
+      return "As responsabilidades são obrigatórias.";
+    }
     return null;
   }
 
@@ -109,6 +115,10 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
       discipline: isProfessor ? form.discipline || null : null,
       work_type: isProfessor ? null : form.work_type,
       expected_schedule: isProfessor ? null : form.expected_schedule || null,
+      // Trabalho usa Responsabilidades; Professor usa Descrição da vaga
+      description: isProfessor ? form.description || null : null,
+      responsibilities: isProfessor ? null : form.responsibilities || null,
+      differentials: null,
     };
 
     let result;
@@ -312,57 +322,50 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
         </legend>
 
         <div>
-          <label className="label">Descrição curta</label>
+          <label className="label">Resumo (aparece no card)</label>
           <input
             className="input"
             value={form.short_description ?? ""}
             onChange={(e) => set("short_description", e.target.value)}
-            placeholder="Resumo exibido nos cards"
+            placeholder="Resumo curto exibido nos cards de vaga"
           />
         </div>
 
-        <div>
-          <label className="label">Descrição completa *</label>
-          <textarea
-            className="input min-h-28"
-            value={form.description ?? ""}
-            onChange={(e) => set("description", e.target.value)}
-          />
-        </div>
+        {isProfessor ? (
+          <div>
+            <label className="label">Descrição da vaga *</label>
+            <RichTextEditor
+              value={form.description ?? ""}
+              onChange={(html) => set("description", html)}
+              placeholder="Descreva a vaga... (use negrito, listas e emojis)"
+            />
+          </div>
+        ) : (
+          <div>
+            <label className="label">Responsabilidades *</label>
+            <RichTextEditor
+              value={form.responsibilities ?? ""}
+              onChange={(html) => set("responsibilities", html)}
+              placeholder="Liste as responsabilidades... (use negrito, listas e emojis)"
+            />
+          </div>
+        )}
 
         <div>
-          <label className="label">Responsabilidades</label>
-          <textarea
-            className="input min-h-24"
-            value={form.responsibilities ?? ""}
-            onChange={(e) => set("responsibilities", e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label className="label">Requisitos</label>
-          <textarea
-            className="input min-h-24"
+          <label className="label">Requisitos e Qualificações</label>
+          <RichTextEditor
             value={form.requirements ?? ""}
-            onChange={(e) => set("requirements", e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label className="label">Diferenciais</label>
-          <textarea
-            className="input min-h-24"
-            value={form.differentials ?? ""}
-            onChange={(e) => set("differentials", e.target.value)}
+            onChange={(html) => set("requirements", html)}
+            placeholder="Liste os requisitos e qualificações..."
           />
         </div>
 
         <div>
           <label className="label">Benefícios</label>
-          <textarea
-            className="input min-h-24"
+          <RichTextEditor
             value={form.benefits ?? ""}
-            onChange={(e) => set("benefits", e.target.value)}
+            onChange={(html) => set("benefits", html)}
+            placeholder="Liste os benefícios..."
           />
         </div>
       </fieldset>

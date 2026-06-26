@@ -1,6 +1,10 @@
-import { LOGO_CPPEM } from "@/lib/constants";
+import { LOGO_CPPEM, LOGO_COLEGIO } from "@/lib/constants";
+
+type LogoVariant = "cppem" | "colegio";
 
 interface LogoProps {
+  /** Qual logo exibir. Padrão: cppem. */
+  variant?: LogoVariant;
   /** Altura da imagem do logo (classe Tailwind, ex.: "h-10"). */
   className?: string;
   /** Exibe o nome do grupo ao lado do logo. */
@@ -9,21 +13,28 @@ interface LogoProps {
   wordmarkClassName?: string;
 }
 
+const SRC: Record<LogoVariant, { src: string; alt: string }> = {
+  cppem: { src: LOGO_CPPEM, alt: "CPPEM" },
+  colegio: { src: LOGO_COLEGIO, alt: "Colégio CPPEM" },
+};
+
 /**
- * Logo oficial do CPPEM (original do brandbook).
+ * Logo oficial (original dos brandbooks CPPEM / Colégio).
  * Usa <img> simples por se tratar de um asset remoto de logo.
  */
 export default function Logo({
+  variant = "cppem",
   className = "h-10",
   withWordmark = false,
   wordmarkClassName = "text-white",
 }: LogoProps) {
+  const { src, alt } = SRC[variant];
   return (
     <span className="flex items-center gap-3">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={LOGO_CPPEM}
-        alt="CPPEM Colégio e Cursos"
+        src={src}
+        alt={alt}
         className={`${className} w-auto object-contain`}
       />
       {withWordmark && (

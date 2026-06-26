@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Job } from "@/lib/types";
 import { categoryLabel, workTypeLabel } from "@/lib/constants";
+import { looksLikeHtml, sanitizeHtml } from "@/lib/sanitize";
 
 interface JobDetailsProps {
   job: Job;
@@ -12,9 +13,16 @@ function Section({ title, content }: { title: string; content?: string | null })
   return (
     <div>
       <h3 className="text-lg font-bold text-brand-950">{title}</h3>
-      <p className="mt-2 whitespace-pre-line leading-relaxed text-brand-700">
-        {content}
-      </p>
+      {looksLikeHtml(content) ? (
+        <div
+          className="richtext mt-2 leading-relaxed text-brand-700"
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
+        />
+      ) : (
+        <p className="mt-2 whitespace-pre-line leading-relaxed text-brand-700">
+          {content}
+        </p>
+      )}
     </div>
   );
 }
@@ -69,8 +77,10 @@ export default function JobDetails({ job, formUrl }: JobDetailsProps) {
         <div className="space-y-8 lg:col-span-2">
           <Section title="Descrição da vaga" content={job.description} />
           <Section title="Responsabilidades" content={job.responsibilities} />
-          <Section title="Requisitos" content={job.requirements} />
-          <Section title="Diferenciais" content={job.differentials} />
+          <Section
+            title="Requisitos e Qualificações"
+            content={job.requirements}
+          />
           <Section title="Benefícios" content={job.benefits} />
         </div>
 

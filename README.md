@@ -35,9 +35,10 @@ src/
     admin/vagas/[id]/editar       → editar vaga
     admin/configuracoes/page.tsx  → textos, indicadores, redes, formulário
   components/                     → JobCard, JobFilters, JobDetails, Hero,
-                                    StatsSection, AboutSection, Footer, Header,
-                                    Logo, JobsExplorer,
-                                    admin/AdminLayout, admin/AdminJobForm
+                                    StatsSection, AboutSection, LinkedInCard,
+                                    Footer, Header, Logo, JobsExplorer,
+                                    admin/AdminLayout, admin/AdminJobForm,
+                                    admin/RichTextEditor
   lib/
     supabase/client.ts            → cliente browser (anon key)
     supabase/server.ts            → cliente server (cookies)
@@ -150,9 +151,14 @@ Crie um arquivo `.env.local` (use `.env.example` como base):
 
 - **Trabalho** — vagas administrativas, comerciais, marketing, tecnologia,
   pedagógico, serviços gerais, etc. Campos: setor, tipo de vaga (presencial/
-  híbrido/home office), unidade, local, horário previsto.
+  híbrido/home office), unidade, local, horário previsto. Campos de conteúdo:
+  **Responsabilidades, Requisitos e Qualificações, Benefícios**.
 - **Professor** — docência. Campos: categoria (Polivalente ou de Disciplina),
-  segmento, unidade, local.
+  segmento, unidade, local. Campos de conteúdo: **Descrição da vaga, Requisitos
+  e Qualificações, Benefícios**.
+
+> Os campos de conteúdo possuem um editor com **negrito, itálico, listas e
+> emojis** (o texto é salvo como HTML e exibido formatado na página da vaga).
 
 As vagas aparecem em dois blocos na página pública: **"Encontre sua vaga de
 Trabalho"** e **"Encontre sua vaga de Professor"**. Apenas vagas com status
