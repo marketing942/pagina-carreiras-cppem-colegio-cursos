@@ -40,6 +40,7 @@ function emptyForm(): JobInput {
     requirements: "",
     differentials: "",
     benefits: "",
+    apply_url: "",
   };
 }
 
@@ -67,6 +68,7 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
           requirements: job.requirements ?? "",
           differentials: job.differentials ?? "",
           benefits: job.benefits ?? "",
+          apply_url: job.apply_url ?? "",
         }
       : emptyForm()
   );
@@ -119,6 +121,7 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
       description: isProfessor ? form.description || null : null,
       responsibilities: isProfessor ? null : form.responsibilities || null,
       differentials: null,
+      apply_url: form.apply_url?.trim() || null,
     };
 
     let result;
@@ -366,6 +369,16 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
             value={form.benefits ?? ""}
             onChange={(html) => set("benefits", html)}
             placeholder="Liste os benefícios..."
+          />
+        </div>
+
+        <div>
+          <label className="label">Link de candidatura (opcional)</label>
+          <input
+            className="input"
+            value={form.apply_url ?? ""}
+            onChange={(e) => set("apply_url", e.target.value)}
+            placeholder="Deixe vazio para usar o formulário geral das configurações"
           />
         </div>
       </fieldset>

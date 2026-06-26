@@ -21,6 +21,9 @@ export interface Job {
   requirements: string | null;
   differentials: string | null;
   benefits: string | null;
+  // Link de candidatura específico desta vaga (opcional).
+  // Quando vazio, usa o link geral em site_settings.form_url.
+  apply_url: string | null;
   created_at: string;
   updated_at: string;
 }

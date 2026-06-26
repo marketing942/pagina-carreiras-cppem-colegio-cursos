@@ -26,9 +26,9 @@ export default async function CarreirasPage() {
       <main>
         <Hero openJobsCount={jobs.length} areasCount={areasCount} />
         <StatsSection settings={settings} />
-        <WhatsAppGroupBanner url={settings.whatsapp_group_url} />
         <JobsExplorer jobs={jobs} />
         <AboutSection settings={settings} />
+        <WhatsAppGroupBanner url={settings.whatsapp_group_url} />
         <LinkedInCard url={settings.linkedin_url} />
       </main>
       <Footer settings={settings} />

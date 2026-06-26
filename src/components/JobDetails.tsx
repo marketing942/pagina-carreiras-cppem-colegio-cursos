@@ -29,6 +29,8 @@ function Section({ title, content }: { title: string; content?: string | null })
 
 /** Conteúdo da página de detalhes de uma vaga. */
 export default function JobDetails({ job, formUrl }: JobDetailsProps) {
+  // Usa o link específico da vaga, com fallback para o link geral
+  const applyUrl = job.apply_url || formUrl;
   const meta: { label: string; value?: string | null }[] = [
     { label: "Tipo", value: categoryLabel(job.category) },
     {
@@ -62,7 +64,7 @@ export default function JobDetails({ job, formUrl }: JobDetailsProps) {
             </p>
           )}
           <a
-            href={formUrl}
+            href={applyUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary mt-6"
@@ -104,7 +106,7 @@ export default function JobDetails({ job, formUrl }: JobDetailsProps) {
             </div>
 
             <a
-              href={formUrl}
+              href={applyUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary w-full"

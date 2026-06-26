@@ -93,6 +93,8 @@ supabase/migrations/           → schema, RLS, configurações e vagas (0001–
    - `0002_rebrand_links.sql` — ajuste dos links sociais (Linktree por marca).
    - `0003_footer_contact.sql` — CNPJ, endereço, link do mapa e grupo de WhatsApp.
    - `0004_seed_jobs.sql` — cadastra as vagas de Trabalho atuais.
+   - `0005_seed_professors.sql` — cadastra as vagas de Professores e adiciona
+     o link de candidatura por vaga (`apply_url`).
 
    > Em uma instalação nova, rodar todos em ordem deixa o banco completo. As
    > migrations são idempotentes (podem ser executadas novamente sem duplicar).
