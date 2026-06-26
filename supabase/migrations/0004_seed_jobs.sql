@@ -18,7 +18,7 @@ insert into public.jobs
   (title, slug, category, department, work_type, unit, location, expected_schedule, status, short_description, responsibilities, requirements, benefits)
 select
   'Social Media', 'social-media', 'trabalho', 'Marketing', 'presencial',
-  'CPPEM Concursos', 'Caruaru-PE',
+  'CPPEM Concursos, Colégio CPPEM, Unicive Caruaru', 'Caruaru-PE',
   'Segunda a Sexta, 12h12 às 22h (pausa das 18h às 19h)', 'aberta',
   'Representa a marca nas redes sociais, criando e publicando conteúdo.',
   '<ul><li>Representar a marca nas nossas redes sociais</li><li>Criar linhas editoriais para nossas redes sociais</li><li>Gerenciar 2 perfis do Instagram e TikTok, seguindo e superando as redes sociais</li><li>Analisar os dados das redes sociais e pontos de melhoria</li><li>Fazer a gravação de conteúdos para anúncios</li><li>Trabalhar de forma integrada com o time de vendas e produtos, garantindo fluidez na empresa</li><li>Alcançar e superar objetivos estabelecidos, contribuindo para o crescimento da empresa</li></ul>',
@@ -31,7 +31,7 @@ insert into public.jobs
   (title, slug, category, department, work_type, unit, location, expected_schedule, status, short_description, responsibilities, requirements, benefits)
 select
   'Coordenador de Marketing', 'coordenador-de-marketing', 'trabalho', 'Marketing', 'presencial',
-  'CPPEM Concursos', 'Caruaru-PE',
+  'CPPEM Concursos, Colégio CPPEM, Unicive Caruaru', 'Caruaru-PE',
   'Segunda a Sexta, 12h12 às 22h (pausa das 18h às 19h)', 'aberta',
   'Coordena a equipe e faz acontecer as estratégias de marketing do grupo.',
   '<ul><li>Realizar reuniões periódicas com a equipe de marketing</li><li>Treinar a equipe e novos integrantes na área de marketing</li><li>Gerenciar nossos sistemas de marketing</li><li>Analisar dados junto ao estrategista de marketing e tomar decisões</li><li>Gerenciar os projetos, eventos e lançamentos de marketing</li><li>Garantir a execução operacional correta da equipe nos projetos de marketing</li><li>Trabalhar de forma integrada com Comercial, Produtos e Tecnologia, garantindo fluidez na empresa</li><li>Atingir e superar metas estabelecidas, mantendo alto padrão ético e entrega de valor</li></ul>',
@@ -44,7 +44,7 @@ insert into public.jobs
   (title, slug, category, department, work_type, unit, location, expected_schedule, status, short_description, responsibilities, requirements, benefits)
 select
   'Zelador', 'zelador', 'trabalho', 'Serviços Gerais', 'presencial',
-  'Colégio CPPEM', 'Caruaru-PE',
+  'CPPEM Concursos, Colégio CPPEM', 'Caruaru-PE',
   'Segunda a Sexta, 18h10 às 22h10', 'aberta',
   'Mantém o ambiente do colégio e do curso limpo e organizado.',
   '<ul><li>Aumentar o índice de satisfação da limpeza dos alunos e colaboradores</li><li>Manter o ambiente administrativo limpo e organizado</li><li>Manter o ambiente das aulas limpo e organizado</li><li>Organizar e gerenciar os materiais de limpeza</li><li>Enviar relatórios diários do que foi feito no dia</li><li>Comunicar pontos de consertos do prédio</li></ul>',
@@ -57,7 +57,7 @@ insert into public.jobs
   (title, slug, category, department, work_type, unit, location, expected_schedule, status, short_description, responsibilities, requirements, benefits)
 select
   'Gestor de YouTube', 'gestor-de-youtube', 'trabalho', 'Marketing', 'presencial',
-  'CPPEM Concursos', 'Caruaru-PE',
+  'CPPEM Concursos, Colégio CPPEM', 'Caruaru-PE',
   'Segunda a Sexta, 12h12 às 22h (pausa das 18h às 19h)', 'aberta',
   'Gerencia os canais do YouTube do grupo e produz conteúdo.',
   '<ul><li>Concluir diariamente a linha editorial do YouTube sem erros</li><li>Gerenciar dois canais do YouTube (vídeos, lives, shorts, thumbnails, descrição, hashtags)</li><li>Analisar os dados do YouTube e pontos de melhoria</li><li>Fazer gravação de conteúdos para o YouTube</li><li>Organizar e controlar lives no YouTube</li><li>Organizar e controlar podcasts dos canais</li></ul>',

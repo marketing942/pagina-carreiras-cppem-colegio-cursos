@@ -13,6 +13,7 @@ import {
   UNITS,
   WORK_TYPES,
   DEFAULT_LOCATION,
+  parseUnits,
 } from "@/lib/constants";
 import type { Job, JobCategory, JobInput } from "@/lib/types";
 
@@ -79,12 +80,24 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
+  // Unidades selecionadas (uma vaga pode ter mais de uma)
+  const selectedUnits = parseUnits(form.unit);
+  function toggleUnit(u: string) {
+    const next = selectedUnits.includes(u)
+      ? selectedUnits.filter((x) => x !== u)
+      : [...selectedUnits, u];
+    // Mantém a ordem canônica das unidades
+    const ordered = UNITS.filter((x) => next.includes(x));
+    set("unit", ordered.join(", "));
+  }
+
   const isProfessor = form.category === "professor";
 
   function validate(): string | null {
     if (!form.title.trim()) return "O título é obrigatório.";
     if (!form.category) return "A categoria é obrigatória.";
-    if (!form.unit?.trim()) return "A unidade é obrigatória.";
+    if (selectedUnits.length === 0)
+      return "Selecione pelo menos uma unidade.";
     if (!form.location.trim()) return "O local é obrigatório.";
     if (!form.status) return "O status é obrigatório.";
     if (isProfessor) {
@@ -279,20 +292,34 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
             </div>
           )}
 
-          <div>
-            <label className="label">Unidade *</label>
-            <select
-              className="input"
-              value={form.unit ?? ""}
-              onChange={(e) => set("unit", e.target.value)}
-            >
-              <option value="">Selecione...</option>
-              {UNITS.map((u) => (
-                <option key={u} value={u}>
-                  {u}
-                </option>
-              ))}
-            </select>
+          <div className="sm:col-span-2">
+            <label className="label">Unidade(s) *</label>
+            <p className="mb-2 text-xs text-brand-500">
+              Selecione uma ou mais unidades para esta vaga.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {UNITS.map((u) => {
+                const selected = selectedUnits.includes(u);
+                return (
+                  <label
+                    key={u}
+                    className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
+                      selected
+                        ? "border-accent-500 bg-accent-50 text-brand-900"
+                        : "border-brand-200 bg-white text-brand-700 hover:bg-brand-50"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selected}
+                      onChange={() => toggleUnit(u)}
+                      className="h-4 w-4 rounded border-brand-300"
+                    />
+                    {u}
+                  </label>
+                );
+              })}
+            </div>
           </div>
 
           <div>

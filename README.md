@@ -95,6 +95,8 @@ supabase/migrations/           → schema, RLS, configurações e vagas (0001–
    - `0004_seed_jobs.sql` — cadastra as vagas de Trabalho atuais.
    - `0005_seed_professors.sql` — cadastra as vagas de Professores e adiciona
      o link de candidatura por vaga (`apply_url`).
+   - `0006_multi_units.sql` — atualiza as vagas que atendem a mais de uma
+     unidade (uma vaga pode ter várias unidades).
 
    > Em uma instalação nova, rodar todos em ordem deixa o banco completo. As
    > migrations são idempotentes (podem ser executadas novamente sem duplicar).
