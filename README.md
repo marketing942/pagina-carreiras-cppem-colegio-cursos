@@ -35,9 +35,10 @@ src/
     admin/vagas/[id]/editar       → editar vaga
     admin/configuracoes/page.tsx  → textos, indicadores, redes, formulário
   components/                     → JobCard, JobFilters, JobDetails, Hero,
-                                    StatsSection, AboutSection, Footer, Header,
-                                    Logo, JobsExplorer,
-                                    admin/AdminLayout, admin/AdminJobForm
+                                    StatsSection, AboutSection, LinkedInCard,
+                                    Footer, Header, Logo, JobsExplorer,
+                                    admin/AdminLayout, admin/AdminJobForm,
+                                    admin/RichTextEditor
   lib/
     supabase/client.ts            → cliente browser (anon key)
     supabase/server.ts            → cliente server (cookies)
@@ -45,7 +46,7 @@ src/
     jobs.ts, settings.ts          → acesso aos dados
     slug.ts                       → geração de slug
   proxy.ts                        → protege rotas /admin
-supabase/migrations/0001_init.sql → schema, RLS e seed
+supabase/migrations/           → schema, RLS, configurações e vagas (0001–0004)
 .env.example
 ```
 
@@ -84,10 +85,17 @@ supabase/migrations/0001_init.sql → schema, RLS e seed
 
 1. Crie um projeto em <https://supabase.com>.
 
-2. Abra **SQL Editor → New query**, cole o conteúdo de
-   [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql) e clique em **RUN**.
-   Isso cria as tabelas `jobs` e `site_settings`, as políticas de segurança (RLS),
-   triggers de `updated_at` e alguns dados de exemplo.
+2. Abra **SQL Editor → New query** e rode os arquivos de
+   [`supabase/migrations`](supabase/migrations) **em ordem** (0001 → 0002 → 0003
+   → 0004), colando e dando **RUN** em cada um:
+   - `0001_init.sql` — tabelas `jobs` e `site_settings`, RLS, triggers e
+     configurações iniciais.
+   - `0002_rebrand_links.sql` — ajuste dos links sociais (Linktree por marca).
+   - `0003_footer_contact.sql` — CNPJ, endereço, link do mapa e grupo de WhatsApp.
+   - `0004_seed_jobs.sql` — cadastra as vagas de Trabalho atuais.
+
+   > Em uma instalação nova, rodar todos em ordem deixa o banco completo. As
+   > migrations são idempotentes (podem ser executadas novamente sem duplicar).
 
 3. **Crie o usuário administrador** (para acessar o `/admin`):
    - Vá em **Authentication → Users → Add user**.
@@ -150,9 +158,14 @@ Crie um arquivo `.env.local` (use `.env.example` como base):
 
 - **Trabalho** — vagas administrativas, comerciais, marketing, tecnologia,
   pedagógico, serviços gerais, etc. Campos: setor, tipo de vaga (presencial/
-  híbrido/home office), unidade, local, horário previsto.
+  híbrido/home office), unidade, local, horário previsto. Campos de conteúdo:
+  **Responsabilidades, Requisitos e Qualificações, Benefícios**.
 - **Professor** — docência. Campos: categoria (Polivalente ou de Disciplina),
-  segmento, unidade, local.
+  segmento, unidade, local. Campos de conteúdo: **Descrição da vaga, Requisitos
+  e Qualificações, Benefícios**.
+
+> Os campos de conteúdo possuem um editor com **negrito, itálico, listas e
+> emojis** (o texto é salvo como HTML e exibido formatado na página da vaga).
 
 As vagas aparecem em dois blocos na página pública: **"Encontre sua vaga de
 Trabalho"** e **"Encontre sua vaga de Professor"**. Apenas vagas com status

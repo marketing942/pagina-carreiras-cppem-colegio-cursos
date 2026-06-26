@@ -63,7 +63,11 @@ create table if not exists public.site_settings (
   linktree_colegio_url text,
   linktree_unicive_url text,
   linkedin_url      text,
-  address           text default 'Caruaru-PE',
+  -- Grupo de WhatsApp para anúncios de vagas
+  whatsapp_group_url text default 'https://chat.whatsapp.com/JKlwbSeG38ECLh5UJSRGl3?mode=gi_t',
+  address           text default 'Praça Presidente Getúlio Vargas, 1119 – Caruaru, Pernambuco, Prédio de 5 andares',
+  cnpj              text default '57.347.872/0001-48',
+  maps_url          text default 'https://links.cppem.com.br/localiza%C3%A7%C3%A3o-maps',
   footer_description text default 'Há mais de 7 anos transformando vidas por meio da educação.',
   created_at        timestamptz not null default now(),
   updated_at        timestamptz not null default now()
@@ -148,45 +152,10 @@ create policy "authenticated insert settings"
   with check (true);
 
 -- --------------------------------------------------------------
--- Seed: linha única de configurações + vagas de exemplo
+-- Seed: linha única de configurações
+-- (As vagas reais são inseridas na migration 0004_seed_jobs.sql)
 -- --------------------------------------------------------------
 insert into public.site_settings (about_text)
 select
   'Há mais de 7 anos, o CPPEM trabalha todos os dias com um único propósito ambicioso: transformar vidas por meio da educação. Somando o CPPEM Concursos e a atuação no ensino superior EAD, já são cerca de 14.000 alunos aprovados em concursos públicos em todo o Brasil — histórias reais de mudança, dignidade e futuro. Além disso, contamos com mais de 50 colaboradores e professores juntos mudando vidas.'
 where not exists (select 1 from public.site_settings);
-
-insert into public.jobs (title, slug, category, department, segment, work_type, unit, location, expected_schedule, status, short_description, description, responsibilities, requirements, benefits)
-select * from (values
-  ('Analista de Marketing', 'analista-de-marketing', 'trabalho', 'Marketing', 'Concursos', 'presencial', 'CPPEM Concursos', 'Caruaru-PE', 'Seg a Sex, 8h às 18h', 'aberta',
-   'Planejamento e execução de campanhas de marketing digital.',
-   'Buscamos um Analista de Marketing apaixonado por educação para fortalecer nossa marca e atrair novos alunos.',
-   'Planejar campanhas; gerenciar redes sociais; analisar métricas.',
-   'Experiência com marketing digital; domínio de ferramentas de tráfego pago.',
-   'Plano de saúde; vale-refeição; bolsa de estudos.'),
-  ('Consultor Comercial', 'consultor-comercial', 'trabalho', 'Comercial', 'Concursos', 'presencial', 'CPPEM Concursos', 'Caruaru-PE', 'Seg a Sex, 9h às 18h', 'aberta',
-   'Atendimento e conversão de novos alunos.',
-   'Profissional comunicativo para atuar na linha de frente das matrículas.',
-   'Atender leads; realizar matrículas; bater metas.',
-   'Experiência comercial; boa comunicação.',
-   'Comissão; plano de saúde.'),
-  ('Desenvolvedor Full Stack', 'desenvolvedor-full-stack', 'trabalho', 'Tecnologia', 'Concursos', 'hibrido', 'CPPEM Concursos', 'Caruaru-PE', 'Seg a Sex, horário flexível', 'aberta',
-   'Desenvolvimento e manutenção das plataformas internas.',
-   'Buscamos pessoa desenvolvedora para evoluir nossos produtos digitais.',
-   'Desenvolver features; manter sistemas; colaborar com o time.',
-   'Conhecimento em React/Next.js e bancos relacionais.',
-   'Trabalho híbrido; bolsa de estudos.')
-) as v
-where not exists (select 1 from public.jobs);
-
-insert into public.jobs (title, slug, category, discipline, segment, unit, location, status, short_description, description, requirements)
-select * from (values
-  ('Professor de Matemática', 'professor-de-matematica', 'professor', 'de Disciplina', 'Ensino Médio', 'Colégio CPPEM', 'Caruaru-PE', 'aberta',
-   'Aulas de Matemática para o Ensino Médio.',
-   'Procuramos professor(a) de Matemática comprometido com a aprovação dos alunos.',
-   'Licenciatura em Matemática; experiência em sala de aula.'),
-  ('Professor Polivalente', 'professor-polivalente', 'professor', 'Polivalente', 'Ensino Fundamental', 'Colégio CPPEM', 'Caruaru-PE', 'aberta',
-   'Docência polivalente para os anos iniciais.',
-   'Educador(a) dedicado(a) à formação integral das crianças.',
-   'Pedagogia; experiência com anos iniciais.')
-) as v
-where not exists (select 1 from public.jobs where category = 'professor');

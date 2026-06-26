@@ -4,6 +4,8 @@ import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
 import StatsSection from "@/components/StatsSection";
 import JobsExplorer from "@/components/JobsExplorer";
+import LinkedInCard from "@/components/LinkedInCard";
+import WhatsAppGroupBanner from "@/components/WhatsAppGroupBanner";
 import { getOpenJobs } from "@/lib/jobs";
 import { getSettings } from "@/lib/settings";
 
@@ -24,8 +26,10 @@ export default async function CarreirasPage() {
       <main>
         <Hero openJobsCount={jobs.length} areasCount={areasCount} />
         <StatsSection settings={settings} />
+        <WhatsAppGroupBanner url={settings.whatsapp_group_url} />
         <JobsExplorer jobs={jobs} />
         <AboutSection settings={settings} />
+        <LinkedInCard url={settings.linkedin_url} />
       </main>
       <Footer settings={settings} />
     </>

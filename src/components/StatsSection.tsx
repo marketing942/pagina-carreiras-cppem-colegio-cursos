@@ -25,7 +25,7 @@ export default function StatsSection({ settings }: StatsSectionProps) {
                 key={i}
                 className="card flex flex-col gap-2 p-6 text-center"
               >
-                <span className="text-3xl font-black text-accent-500">
+                <span className="text-3xl font-black text-accent-600">
                   {highlight}
                 </span>
                 <span className="text-sm font-medium text-brand-700">
