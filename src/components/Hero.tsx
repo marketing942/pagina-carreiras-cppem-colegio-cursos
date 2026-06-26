@@ -15,10 +15,10 @@ export default function Hero({ openJobsCount, areasCount }: HeroProps) {
 
       <div className="container-page relative py-14 sm:py-20">
         {/* Logos das marcas — passa confiança institucional */}
-        <div className="mb-10 flex flex-wrap items-center gap-6 sm:gap-10">
-          <Logo variant="cppem" className="h-14 sm:h-16" />
-          <span className="h-10 w-px bg-white/20" aria-hidden />
-          <Logo variant="colegio" className="h-14 sm:h-16" />
+        <div className="mb-10 flex flex-wrap items-center gap-8 sm:gap-12">
+          <Logo variant="cppem" className="h-20 sm:h-28" />
+          <span className="h-16 w-px bg-white/20" aria-hidden />
+          <Logo variant="colegio" className="h-20 sm:h-28" />
         </div>
 
         <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm font-medium text-brand-100">

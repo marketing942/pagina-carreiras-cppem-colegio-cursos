@@ -184,6 +184,14 @@ export default function ConfiguracoesPage() {
                   placeholder="https://linkedin.com/company/..."
                 />
               </Field>
+              <Field label="Grupo de WhatsApp (anúncios de vagas)">
+                <input
+                  className="input"
+                  value={settings.whatsapp_group_url ?? ""}
+                  onChange={(e) => set("whatsapp_group_url", e.target.value)}
+                  placeholder="https://chat.whatsapp.com/..."
+                />
+              </Field>
             </div>
           </Card>
 
@@ -196,6 +204,24 @@ export default function ConfiguracoesPage() {
                 onChange={(e) => set("address", e.target.value)}
               />
             </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="CNPJ">
+                <input
+                  className="input"
+                  value={settings.cnpj ?? ""}
+                  onChange={(e) => set("cnpj", e.target.value)}
+                  placeholder="00.000.000/0001-00"
+                />
+              </Field>
+              <Field label="Link da localização (Maps)">
+                <input
+                  className="input"
+                  value={settings.maps_url ?? ""}
+                  onChange={(e) => set("maps_url", e.target.value)}
+                  placeholder="https://..."
+                />
+              </Field>
+            </div>
             <Field label="Descrição do rodapé">
               <textarea
                 className="input min-h-20"

@@ -42,7 +42,11 @@ export interface SiteSettings {
   linktree_unicive_url: string | null;
   // LinkedIn é único para o grupo
   linkedin_url: string | null;
+  // Grupo de WhatsApp para anúncios de vagas
+  whatsapp_group_url: string | null;
   address: string | null;
+  cnpj: string | null;
+  maps_url: string | null;
   footer_description: string | null;
   created_at: string;
   updated_at: string;

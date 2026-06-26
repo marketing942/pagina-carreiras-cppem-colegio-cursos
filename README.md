@@ -46,7 +46,7 @@ src/
     jobs.ts, settings.ts          → acesso aos dados
     slug.ts                       → geração de slug
   proxy.ts                        → protege rotas /admin
-supabase/migrations/0001_init.sql → schema, RLS e seed
+supabase/migrations/           → schema, RLS, configurações e vagas (0001–0004)
 .env.example
 ```
 
@@ -85,10 +85,17 @@ supabase/migrations/0001_init.sql → schema, RLS e seed
 
 1. Crie um projeto em <https://supabase.com>.
 
-2. Abra **SQL Editor → New query**, cole o conteúdo de
-   [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql) e clique em **RUN**.
-   Isso cria as tabelas `jobs` e `site_settings`, as políticas de segurança (RLS),
-   triggers de `updated_at` e alguns dados de exemplo.
+2. Abra **SQL Editor → New query** e rode os arquivos de
+   [`supabase/migrations`](supabase/migrations) **em ordem** (0001 → 0002 → 0003
+   → 0004), colando e dando **RUN** em cada um:
+   - `0001_init.sql` — tabelas `jobs` e `site_settings`, RLS, triggers e
+     configurações iniciais.
+   - `0002_rebrand_links.sql` — ajuste dos links sociais (Linktree por marca).
+   - `0003_footer_contact.sql` — CNPJ, endereço, link do mapa e grupo de WhatsApp.
+   - `0004_seed_jobs.sql` — cadastra as vagas de Trabalho atuais.
+
+   > Em uma instalação nova, rodar todos em ordem deixa o banco completo. As
+   > migrations são idempotentes (podem ser executadas novamente sem duplicar).
 
 3. **Crie o usuário administrador** (para acessar o `/admin`):
    - Vá em **Authentication → Users → Add user**.

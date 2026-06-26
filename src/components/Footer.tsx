@@ -34,12 +34,22 @@ export default function Footer({ settings }: FooterProps) {
             Localização
           </h3>
           <p className="mt-4 text-sm text-brand-200">{settings.address}</p>
+          {settings.maps_url && (
+            <a
+              href={settings.maps_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block text-sm text-accent-300 transition-colors hover:text-accent-200"
+            >
+              Ver no mapa →
+            </a>
+          )}
           {settings.linkedin_url && (
             <a
               href={settings.linkedin_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-block text-sm text-accent-300 transition-colors hover:text-accent-200"
+              className="mt-3 block text-sm text-accent-300 transition-colors hover:text-accent-200"
             >
               LinkedIn →
             </a>
@@ -74,10 +84,16 @@ export default function Footer({ settings }: FooterProps) {
       </div>
 
       <div className="border-t border-white/10 py-6">
-        <p className="container-page text-center text-xs text-brand-300">
-          © {new Date().getFullYear()} {settings.company_name}. Todos os direitos
-          reservados.
-        </p>
+        <div className="container-page space-y-1 text-center text-xs text-brand-300">
+          <p>
+            {settings.company_name.toUpperCase()} LTDA
+            {settings.cnpj ? ` – CNPJ: ${settings.cnpj}` : ""}
+          </p>
+          <p>
+            © {new Date().getFullYear()} {settings.company_name}. Todos os
+            direitos reservados.
+          </p>
+        </div>
       </div>
     </footer>
   );
