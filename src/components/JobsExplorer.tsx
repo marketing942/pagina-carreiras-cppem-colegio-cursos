@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Job } from "@/lib/types";
+import { parseUnits } from "@/lib/constants";
 import JobCard from "./JobCard";
 import JobFilters, { type FilterState } from "./JobFilters";
 
@@ -36,7 +37,7 @@ export default function JobsExplorer({ jobs }: JobsExplorerProps) {
   const units = useMemo(
     () =>
       Array.from(
-        new Set(jobs.map((j) => j.unit).filter(Boolean) as string[])
+        new Set(jobs.flatMap((j) => parseUnits(j.unit)))
       ).sort(),
     [jobs]
   );
@@ -54,7 +55,8 @@ export default function JobsExplorer({ jobs }: JobsExplorerProps) {
       if (filters.category && job.category !== filters.category) return false;
       if (filters.department && job.department !== filters.department)
         return false;
-      if (filters.unit && job.unit !== filters.unit) return false;
+      if (filters.unit && !parseUnits(job.unit).includes(filters.unit))
+        return false;
       if (filters.workType && job.work_type !== filters.workType) return false;
       if (filters.location && job.location !== filters.location) return false;
       if (term) {

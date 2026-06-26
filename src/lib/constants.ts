@@ -38,6 +38,15 @@ export const STATUSES: { value: JobStatus; label: string }[] = [
 
 export const DEFAULT_LOCATION = "Caruaru-PE";
 
+/** Uma vaga pode ter mais de uma unidade, separadas por vírgula. */
+export function parseUnits(unit?: string | null): string[] {
+  if (!unit) return [];
+  return unit
+    .split(",")
+    .map((u) => u.trim())
+    .filter(Boolean);
+}
+
 // Logos oficiais (originais dos brandbooks CPPEM e Colégio)
 export const LOGO_CPPEM =
   "https://raw.githubusercontent.com/marketing942/fotos-dos-bots/main/LOGO%20CPPEM.png";

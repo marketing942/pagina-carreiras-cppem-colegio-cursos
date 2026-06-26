@@ -10,7 +10,7 @@ export default function WhatsAppGroupBanner({ url }: WhatsAppGroupBannerProps) {
   if (!url) return null;
 
   return (
-    <section className="bg-white pt-12">
+    <section className="bg-white py-12">
       <div className="container-page">
         <div className="flex flex-col items-start justify-between gap-5 rounded-2xl border border-accent-200 bg-accent-50 p-6 sm:flex-row sm:items-center sm:p-7">
           <div className="flex items-start gap-4">
