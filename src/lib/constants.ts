@@ -38,6 +38,12 @@ export const STATUSES: { value: JobStatus; label: string }[] = [
 
 export const DEFAULT_LOCATION = "Caruaru-PE";
 
+// Logos oficiais (originais dos brandbooks CPPEM e Colégio)
+export const LOGO_CPPEM =
+  "https://raw.githubusercontent.com/marketing942/fotos-dos-bots/main/LOGO%20CPPEM.png";
+export const LOGO_COLEGIO =
+  "https://raw.githubusercontent.com/marketing942/fotos-dos-bots/main/LOGO%20COLE%CC%81GIO.png";
+
 export function workTypeLabel(value?: WorkType | null): string {
   return WORK_TYPES.find((w) => w.value === value)?.label ?? "";
 }

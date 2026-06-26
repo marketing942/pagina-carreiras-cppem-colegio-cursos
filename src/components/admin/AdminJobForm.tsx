@@ -135,7 +135,7 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {error && (
-        <p className="rounded-lg bg-accent-50 px-4 py-3 text-sm text-accent-700">
+        <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </p>
       )}

@@ -33,7 +33,7 @@ export default function EditarVagaPage({ params }: PageProps) {
       {loading ? (
         <p className="text-brand-500">Carregando...</p>
       ) : !job ? (
-        <p className="text-accent-600">Vaga não encontrada.</p>
+        <p className="text-red-600">Vaga não encontrada.</p>
       ) : (
         <AdminJobForm job={job} />
       )}

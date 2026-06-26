@@ -11,7 +11,7 @@ export default function Hero({ openJobsCount, areasCount }: HeroProps) {
       <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-brand-600/30 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 top-12 h-80 w-80 rounded-full bg-accent-500/20 blur-3xl" />
 
-      <div className="container-page relative py-20 sm:py-28">
+      <div className="container-page relative py-14 sm:py-20">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm font-medium text-brand-100">
           <span className="h-2 w-2 animate-pulse rounded-full bg-accent-400" />
           Estamos contratando
@@ -22,12 +22,6 @@ export default function Hero({ openJobsCount, areasCount }: HeroProps) {
           educação.
         </h1>
 
-        <p className="mt-6 max-w-2xl text-lg text-brand-100">
-          Faça parte do nosso time e ajude a abrir caminhos por meio da
-          educação. Buscamos profissionais que acreditam que educar é servir,
-          formar caráter e construir futuro.
-        </p>
-
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a href="#vagas" className="btn-primary">
             Ver vagas abertas
@@ -35,27 +29,27 @@ export default function Hero({ openJobsCount, areasCount }: HeroProps) {
           <a href="#sobre" className="btn-ghost">
             Conheça nossa missão
           </a>
-        </div>
 
-        {/* Indicadores rápidos */}
-        <div className="mt-14 flex flex-wrap gap-10">
-          <div>
-            <p className="text-4xl font-black text-white">{openJobsCount}</p>
-            <p className="text-sm uppercase tracking-wide text-brand-300">
-              Vagas abertas
-            </p>
-          </div>
-          <div>
-            <p className="text-4xl font-black text-white">{areasCount}</p>
-            <p className="text-sm uppercase tracking-wide text-brand-300">
-              Áreas
-            </p>
+          {/* Indicadores rápidos */}
+          <div className="mt-2 flex flex-wrap items-center gap-8 sm:ml-auto sm:mt-0">
+            <div>
+              <p className="text-3xl font-black text-white">{openJobsCount}</p>
+              <p className="text-xs uppercase tracking-wide text-brand-300">
+                Vagas abertas
+              </p>
+            </div>
+            <div>
+              <p className="text-3xl font-black text-white">{areasCount}</p>
+              <p className="text-xs uppercase tracking-wide text-brand-300">
+                Áreas
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Curva inferior */}
-      <div className="h-10 rounded-t-[40px] bg-white" />
+      <div className="h-8 rounded-t-[36px] bg-white" />
     </section>
   );
 }

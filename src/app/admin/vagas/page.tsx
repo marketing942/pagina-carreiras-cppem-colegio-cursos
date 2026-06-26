@@ -140,7 +140,7 @@ export default function VagasPage() {
                       <button
                         disabled={busy === job.id}
                         onClick={() => remove(job.id)}
-                        className="rounded-md border border-accent-200 px-2.5 py-1 text-xs font-medium text-accent-600 hover:bg-accent-50"
+                        className="rounded-md border border-red-200 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
                       >
                         Excluir
                       </button>

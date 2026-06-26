@@ -13,14 +13,10 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   stat_extra: "Educação, disciplina e transformação de vidas",
   form_url:
     "https://cppem.notion.site/2e5bbae8074c80a4b7ddf45a8fb28f97?pvs=105",
-  form_embed_url:
-    "https://cppem.notion.site/ebd//2e5bbae8074c80a4b7ddf45a8fb28f97",
-  show_form_embed: true,
-  instagram_url: "https://instagram.com/cppem",
-  youtube_url: "https://youtube.com/@cppem",
-  tiktok_url: "https://tiktok.com/@cppem",
+  linktree_cppem_url: null,
+  linktree_colegio_url: null,
+  linktree_unicive_url: null,
   linkedin_url: null,
-  whatsapp_url: "https://wa.me/5581999999999",
   address: "Caruaru-PE",
   footer_description:
     "Há mais de 7 anos transformando vidas por meio da educação.",

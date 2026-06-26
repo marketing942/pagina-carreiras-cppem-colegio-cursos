@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import Logo from "@/components/Logo";
 
 const NAV = [
   { href: "/admin/dashboard", label: "Dashboard", icon: "📊" },
@@ -52,10 +53,8 @@ export default function AdminLayout({
         >
           <div className="px-6 py-6">
             <Link href="/admin/dashboard" className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-500 font-black text-white">
-                C
-              </span>
-              <span className="font-bold text-white">CPPEM Admin</span>
+              <Logo className="h-8" />
+              <span className="font-bold text-white">Admin</span>
             </Link>
           </div>
           <nav className="space-y-1 px-3">

@@ -5,31 +5,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Identidade visual do CPPEM — azul institucional, vermelho e neutros
+        // Identidade unificada CPPEM Colégio e Cursos
+        // Base: azul-marinho (navy) do Colégio — sóbrio e institucional
         brand: {
-          50: "#eef4fb",
-          100: "#d8e6f6",
-          200: "#b3cdec",
-          300: "#7faedf",
-          400: "#4a89cf",
-          500: "#2a6cb9",
-          600: "#1f5499",
-          700: "#1b447b",
-          800: "#163a66",
-          900: "#0e2747",
-          950: "#081830",
+          50: "#f3f5fa",
+          100: "#e3e9f3",
+          200: "#c3d0e6",
+          300: "#94a8d0",
+          400: "#5f79b0",
+          500: "#1e2f5e",
+          600: "#162247",
+          700: "#0d1b3e",
+          800: "#0b1734",
+          900: "#070f24",
+          950: "#040a18",
         },
+        // Acento: dourado — cor compartilhada pelas duas marcas
         accent: {
-          50: "#fdeced",
-          100: "#fbd5d8",
-          200: "#f6abb1",
-          300: "#ef7c85",
-          400: "#e4505b",
-          500: "#d32f3c",
-          600: "#b21f2b",
-          700: "#911a24",
-          800: "#771a22",
-          900: "#651b21",
+          50: "#fbf7e9",
+          100: "#f6edc8",
+          200: "#efdc92",
+          300: "#e8c350",
+          400: "#d4ad33",
+          500: "#c9a227",
+          600: "#a07b10",
+          700: "#856411",
+          800: "#6d5115",
+          900: "#5d4516",
         },
       },
       fontFamily: {
