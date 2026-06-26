@@ -2,10 +2,10 @@
 
 Sistema completo de **Vagas e Carreiras** do **CPPEM Colégio e Cursos**, com:
 
-- **Página pública** (`/carreiras`) — hero institucional, seção sobre, indicadores, gráfico de vagas por área, busca e filtros, cards de vagas e página de detalhes com candidatura.
+- **Página pública** (`/carreiras`) — hero institucional, indicadores, busca e filtros, cards de vagas e página de detalhes com candidatura.
 - **Área administrativa** (`/admin`) — autenticada via Supabase Auth, para cadastrar, editar, encerrar, reabrir e excluir vagas, além de gerenciar as configurações do site.
 
-> O sistema **não captura dados de candidatos**. Toda candidatura é direcionada para um **formulário externo do Notion** (por link e/ou iframe incorporado).
+> O sistema **não captura dados de candidatos**. Toda candidatura é direcionada para um **formulário externo do Notion** (link aberto em nova aba).
 
 ---
 
@@ -15,7 +15,6 @@ Sistema completo de **Vagas e Carreiras** do **CPPEM Colégio e Cursos**, com:
 - TypeScript
 - Tailwind CSS 3
 - [Supabase](https://supabase.com/) (Postgres + Auth + RLS)
-- [Recharts](https://recharts.org/) (gráfico de vagas por área)
 - Deploy na [Vercel](https://vercel.com/)
 
 ---
@@ -35,9 +34,9 @@ src/
     admin/vagas/nova/page.tsx     → nova vaga
     admin/vagas/[id]/editar       → editar vaga
     admin/configuracoes/page.tsx  → textos, indicadores, redes, formulário
-  components/                     → JobCard, JobFilters, JobChart, JobDetails,
-                                    Hero, StatsSection, AboutSection, Footer,
-                                    Header, NotionFormEmbed, JobsExplorer,
+  components/                     → JobCard, JobFilters, JobDetails, Hero,
+                                    StatsSection, AboutSection, Footer, Header,
+                                    Logo, JobsExplorer,
                                     admin/AdminLayout, admin/AdminJobForm
   lib/
     supabase/client.ts            → cliente browser (anon key)
@@ -142,9 +141,6 @@ Crie um arquivo `.env.local` (use `.env.example` como base):
 
 - Os botões **"Candidatar-se agora"** abrem o formulário do Notion em nova aba
   (URL configurável em **Admin → Configurações → Link do formulário**).
-- O componente reutilizável `NotionFormEmbed` incorpora o formulário via `iframe`
-  em seções estratégicas. Pode ser **ativado/desativado** em
-  **Admin → Configurações → Exibir formulário incorporado**.
 - O sistema **não armazena** nome, e-mail, telefone, currículo ou qualquer dado
   pessoal de candidatos.
 

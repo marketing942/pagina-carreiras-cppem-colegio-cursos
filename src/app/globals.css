@@ -19,13 +19,13 @@
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60;
   }
   .btn-primary {
-    @apply btn bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-400;
+    @apply btn bg-accent-500 text-brand-950 hover:bg-accent-400 focus:ring-accent-300;
   }
   .btn-secondary {
     @apply btn border border-brand-200 bg-white text-brand-800 hover:bg-brand-50 focus:ring-brand-300;
   }
   .btn-ghost {
-    @apply btn bg-white/10 text-white hover:bg-white/20 focus:ring-white/40;
+    @apply btn border border-white/20 bg-white/5 text-white hover:bg-white/15 focus:ring-white/40;
   }
   .input {
     @apply w-full rounded-lg border border-brand-200 bg-white px-4 py-2.5 text-sm text-brand-950 placeholder:text-brand-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200;

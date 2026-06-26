@@ -36,13 +36,12 @@ export interface SiteSettings {
   stat_team: string | null;
   stat_extra: string | null;
   form_url: string;
-  form_embed_url: string;
-  show_form_embed: boolean;
-  instagram_url: string | null;
-  youtube_url: string | null;
-  tiktok_url: string | null;
+  // Linktree de cada marca (reúne todas as redes sociais)
+  linktree_cppem_url: string | null;
+  linktree_colegio_url: string | null;
+  linktree_unicive_url: string | null;
+  // LinkedIn é único para o grupo
   linkedin_url: string | null;
-  whatsapp_url: string | null;
   address: string | null;
   footer_description: string | null;
   created_at: string;

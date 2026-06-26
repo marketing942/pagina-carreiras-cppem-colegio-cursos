@@ -74,7 +74,7 @@ export default function ConfiguracoesPage() {
             <p
               className={`rounded-lg px-4 py-3 text-sm ${
                 message.startsWith("Erro")
-                  ? "bg-accent-50 text-accent-700"
+                  ? "bg-red-50 text-red-700"
                   : "bg-green-50 text-green-700"
               }`}
             >
@@ -136,70 +136,52 @@ export default function ConfiguracoesPage() {
 
           {/* Formulário Notion */}
           <Card title="Formulário de candidatura (Notion)">
-            <Field label="Link do formulário (botões)">
+            <Field label="Link do formulário (usado nos botões 'Candidatar-se')">
               <input
                 className="input"
                 value={settings.form_url ?? ""}
                 onChange={(e) => set("form_url", e.target.value)}
               />
             </Field>
-            <Field label="URL do formulário incorporado (iframe)">
-              <input
-                className="input"
-                value={settings.form_embed_url ?? ""}
-                onChange={(e) => set("form_embed_url", e.target.value)}
-              />
-            </Field>
-            <label className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                checked={settings.show_form_embed ?? false}
-                onChange={(e) => set("show_form_embed", e.target.checked)}
-                className="h-4 w-4 rounded border-brand-300"
-              />
-              <span className="text-sm text-brand-800">
-                Exibir formulário incorporado na página pública
-              </span>
-            </label>
           </Card>
 
-          {/* Redes sociais */}
-          <Card title="Redes sociais e contato">
+          {/* Redes sociais / Linktrees */}
+          <Card title="Redes sociais (Linktree por marca)">
+            <p className="text-sm text-brand-500">
+              Cada link aponta para o Linktree da marca, que reúne todas as
+              redes sociais.
+            </p>
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="WhatsApp">
+              <Field label="Linktree — CPPEM Concursos">
                 <input
                   className="input"
-                  value={settings.whatsapp_url ?? ""}
-                  onChange={(e) => set("whatsapp_url", e.target.value)}
-                  placeholder="https://wa.me/55..."
+                  value={settings.linktree_cppem_url ?? ""}
+                  onChange={(e) => set("linktree_cppem_url", e.target.value)}
+                  placeholder="https://linktr.ee/..."
                 />
               </Field>
-              <Field label="Instagram">
+              <Field label="Linktree — Colégio CPPEM">
                 <input
                   className="input"
-                  value={settings.instagram_url ?? ""}
-                  onChange={(e) => set("instagram_url", e.target.value)}
+                  value={settings.linktree_colegio_url ?? ""}
+                  onChange={(e) => set("linktree_colegio_url", e.target.value)}
+                  placeholder="https://linktr.ee/..."
                 />
               </Field>
-              <Field label="YouTube">
+              <Field label="Linktree — Unicive Caruaru">
                 <input
                   className="input"
-                  value={settings.youtube_url ?? ""}
-                  onChange={(e) => set("youtube_url", e.target.value)}
+                  value={settings.linktree_unicive_url ?? ""}
+                  onChange={(e) => set("linktree_unicive_url", e.target.value)}
+                  placeholder="https://linktr.ee/..."
                 />
               </Field>
-              <Field label="TikTok">
-                <input
-                  className="input"
-                  value={settings.tiktok_url ?? ""}
-                  onChange={(e) => set("tiktok_url", e.target.value)}
-                />
-              </Field>
-              <Field label="LinkedIn">
+              <Field label="LinkedIn (único do grupo)">
                 <input
                   className="input"
                   value={settings.linkedin_url ?? ""}
                   onChange={(e) => set("linkedin_url", e.target.value)}
+                  placeholder="https://linkedin.com/company/..."
                 />
               </Field>
             </div>

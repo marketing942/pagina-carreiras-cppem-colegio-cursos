@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "./Logo";
 
 interface HeaderProps {
   formUrl: string;
@@ -9,16 +10,8 @@ export default function Header({ formUrl }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-brand-950/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between">
-        <Link href="/carreiras" className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-500 text-lg font-black text-white">
-            C
-          </span>
-          <div className="leading-tight">
-            <span className="block text-sm font-bold text-white">CPPEM</span>
-            <span className="block text-[11px] text-brand-200">
-              Colégio e Cursos
-            </span>
-          </div>
+        <Link href="/carreiras" className="flex items-center">
+          <Logo className="h-9" withWordmark wordmarkClassName="text-brand-100" />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
@@ -33,12 +26,6 @@ export default function Header({ formUrl }: HeaderProps) {
             className="text-sm font-medium text-brand-100 transition-colors hover:text-white"
           >
             Sobre
-          </a>
-          <a
-            href="#indicadores"
-            className="text-sm font-medium text-brand-100 transition-colors hover:text-white"
-          >
-            Indicadores
           </a>
         </nav>
 

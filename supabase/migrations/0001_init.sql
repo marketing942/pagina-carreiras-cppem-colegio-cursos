@@ -56,16 +56,13 @@ create table if not exists public.site_settings (
   stat_students     text default '+14.000 alunos aprovados',
   stat_team         text default '+50 colaboradores e professores',
   stat_extra        text default 'Educação, disciplina e transformação de vidas',
-  -- Formulário de candidatura (Notion)
+  -- Formulário de candidatura (Notion) — usado nos botões "Candidatar-se"
   form_url          text default 'https://cppem.notion.site/2e5bbae8074c80a4b7ddf45a8fb28f97?pvs=105',
-  form_embed_url    text default 'https://cppem.notion.site/ebd//2e5bbae8074c80a4b7ddf45a8fb28f97',
-  show_form_embed   boolean default true,
-  -- Redes sociais e contato
-  instagram_url     text,
-  youtube_url       text,
-  tiktok_url        text,
+  -- Redes sociais: um Linktree por marca (reúne todas as redes) + LinkedIn único
+  linktree_cppem_url   text,
+  linktree_colegio_url text,
+  linktree_unicive_url text,
   linkedin_url      text,
-  whatsapp_url      text,
   address           text default 'Caruaru-PE',
   footer_description text default 'Há mais de 7 anos transformando vidas por meio da educação.',
   created_at        timestamptz not null default now(),
@@ -153,13 +150,9 @@ create policy "authenticated insert settings"
 -- --------------------------------------------------------------
 -- Seed: linha única de configurações + vagas de exemplo
 -- --------------------------------------------------------------
-insert into public.site_settings (about_text, instagram_url, youtube_url, tiktok_url, whatsapp_url)
+insert into public.site_settings (about_text)
 select
-  'Há mais de 7 anos, o CPPEM trabalha todos os dias com um único propósito ambicioso: transformar vidas por meio da educação. Somando o CPPEM Concursos e a atuação no ensino superior EAD, já são cerca de 14.000 alunos aprovados em concursos públicos em todo o Brasil — histórias reais de mudança, dignidade e futuro. Além disso, contamos com mais de 50 colaboradores e professores juntos mudando vidas.',
-  'https://instagram.com/cppem',
-  'https://youtube.com/@cppem',
-  'https://tiktok.com/@cppem',
-  'https://wa.me/5581999999999'
+  'Há mais de 7 anos, o CPPEM trabalha todos os dias com um único propósito ambicioso: transformar vidas por meio da educação. Somando o CPPEM Concursos e a atuação no ensino superior EAD, já são cerca de 14.000 alunos aprovados em concursos públicos em todo o Brasil — histórias reais de mudança, dignidade e futuro. Além disso, contamos com mais de 50 colaboradores e professores juntos mudando vidas.'
 where not exists (select 1 from public.site_settings);
 
 insert into public.jobs (title, slug, category, department, segment, work_type, unit, location, expected_schedule, status, short_description, description, responsibilities, requirements, benefits)
