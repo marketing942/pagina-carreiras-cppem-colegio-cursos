@@ -36,6 +36,8 @@ create table if not exists public.jobs (
   requirements      text,
   differentials     text,
   benefits          text,
+  -- Link de candidatura específico da vaga (opcional; usa form_url se vazio)
+  apply_url         text,
   created_at        timestamptz not null default now(),
   updated_at        timestamptz not null default now()
 );
