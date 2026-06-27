@@ -14,7 +14,7 @@ export default function JobCard({ job }: JobCardProps) {
   return (
     <Link
       href={`/carreiras/${job.slug}`}
-      className="card group flex flex-col p-6"
+      className="card group flex flex-col border-brand-200 bg-brand-50 p-6 hover:bg-white"
     >
       <div className="flex flex-wrap items-center gap-2">
         {tag && (
@@ -52,7 +52,7 @@ export default function JobCard({ job }: JobCardProps) {
         )}
       </dl>
 
-      <span className="btn-secondary mt-5 w-full justify-center group-hover:border-brand-400">
+      <span className="btn-primary mt-5 w-full justify-center">
         Ver detalhes
       </span>
     </Link>

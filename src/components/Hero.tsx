@@ -27,7 +27,7 @@ export default function Hero({ openJobsCount, areasCount }: HeroProps) {
         </span>
 
         <h1 className="mt-6 max-w-3xl text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
-          Construa sua carreira em uma empresa que transforma vidas pela
+          Construa sua carreira na empresa que transforma vidas pela
           educação.
         </h1>
 

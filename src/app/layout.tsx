@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Carreiras | CPPEM Colégio e Cursos",
   description:
-    "Construa sua carreira em uma empresa que transforma vidas pela educação. Conheça as vagas abertas no CPPEM Colégio e Cursos.",
+    "Construa sua carreira na empresa que transforma vidas pela educação. Conheça as vagas abertas no CPPEM Colégio e Cursos.",
 };
 
 export default function RootLayout({
