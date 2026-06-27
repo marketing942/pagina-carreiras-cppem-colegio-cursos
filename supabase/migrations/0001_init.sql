@@ -38,6 +38,8 @@ create table if not exists public.jobs (
   benefits          text,
   -- Link de candidatura específico da vaga (opcional; usa form_url se vazio)
   apply_url         text,
+  -- Vaga em destaque: aparece primeiro na listagem pública
+  featured          boolean not null default false,
   created_at        timestamptz not null default now(),
   updated_at        timestamptz not null default now()
 );

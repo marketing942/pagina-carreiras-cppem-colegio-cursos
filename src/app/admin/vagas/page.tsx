@@ -41,6 +41,13 @@ export default function VagasPage() {
     setBusy(null);
   }
 
+  async function toggleFeatured(id: string, featured: boolean) {
+    setBusy(id);
+    await supabase.from("jobs").update({ featured }).eq("id", id);
+    await refetch();
+    setBusy(null);
+  }
+
   async function remove(id: string) {
     if (!confirm("Tem certeza que deseja excluir esta vaga? Esta ação não pode ser desfeita.")) {
       return;
@@ -89,6 +96,11 @@ export default function VagasPage() {
               {jobs.map((job) => (
                 <tr key={job.id} className="hover:bg-brand-50/50">
                   <td className="px-4 py-3 font-medium text-brand-900">
+                    {job.featured && (
+                      <span title="Vaga em destaque" className="mr-1">
+                        ⭐
+                      </span>
+                    )}
                     {job.title}
                   </td>
                   <td className="px-4 py-3 text-brand-600">
@@ -120,6 +132,17 @@ export default function VagasPage() {
                       >
                         Editar
                       </Link>
+                      <button
+                        disabled={busy === job.id}
+                        onClick={() => toggleFeatured(job.id, !job.featured)}
+                        className={`rounded-md border px-2.5 py-1 text-xs font-medium ${
+                          job.featured
+                            ? "border-accent-500 bg-accent-50 text-brand-800 hover:bg-accent-100"
+                            : "border-brand-200 text-brand-700 hover:bg-brand-50"
+                        }`}
+                      >
+                        {job.featured ? "Remover destaque" : "Destacar"}
+                      </button>
                       {job.status === "aberta" ? (
                         <button
                           disabled={busy === job.id}

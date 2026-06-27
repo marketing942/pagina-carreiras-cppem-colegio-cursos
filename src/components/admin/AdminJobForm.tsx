@@ -42,6 +42,7 @@ function emptyForm(): JobInput {
     differentials: "",
     benefits: "",
     apply_url: "",
+    featured: false,
   };
 }
 
@@ -70,6 +71,7 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
           differentials: job.differentials ?? "",
           benefits: job.benefits ?? "",
           apply_url: job.apply_url ?? "",
+          featured: job.featured ?? false,
         }
       : emptyForm()
   );
@@ -226,6 +228,20 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-brand-200 bg-white px-4 py-3">
+              <input
+                type="checkbox"
+                checked={form.featured ?? false}
+                onChange={(e) => set("featured", e.target.checked)}
+                className="h-4 w-4 rounded border-brand-300"
+              />
+              <span className="text-sm font-medium text-brand-800">
+                ⭐ Destacar esta vaga (aparece em primeiro na página de vagas)
+              </span>
+            </label>
           </div>
 
           {/* Campos específicos por categoria */}
