@@ -14,6 +14,7 @@ export const WORK_TYPES: { value: WorkType; label: string }[] = [
   { value: "presencial", label: "Presencial" },
   { value: "hibrido", label: "Híbrido" },
   { value: "home_office", label: "Home Office" },
+  { value: "terceirizado", label: "Terceirizado" },
 ];
 
 export const UNITS = [

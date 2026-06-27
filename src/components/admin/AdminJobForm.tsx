@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/slug";
@@ -78,20 +78,42 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
+  // Listas configuráveis (setores e unidades) vindas das configurações
+  const [deptOptions, setDeptOptions] = useState<string[]>([...DEPARTMENTS]);
+  const [unitChoices, setUnitChoices] = useState<string[]>([...UNITS]);
+
+  useEffect(() => {
+    createClient()
+      .from("site_settings")
+      .select("departments, units")
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.departments?.length) setDeptOptions(data.departments);
+        if (data?.units?.length) setUnitChoices(data.units);
+      });
+  }, []);
+
   function set<K extends keyof JobInput>(key: K, value: JobInput[K]) {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
   // Unidades selecionadas (uma vaga pode ter mais de uma)
   const selectedUnits = parseUnits(form.unit);
+  // Opções de unidade = configuradas + as já selecionadas (não perde valores)
+  const unitOptions = Array.from(new Set([...unitChoices, ...selectedUnits]));
   function toggleUnit(u: string) {
     const next = selectedUnits.includes(u)
       ? selectedUnits.filter((x) => x !== u)
       : [...selectedUnits, u];
-    // Mantém a ordem canônica das unidades
-    const ordered = UNITS.filter((x) => next.includes(x));
+    const ordered = unitOptions.filter((x) => next.includes(x));
     set("unit", ordered.join(", "));
   }
+  // Opções de setor = configuradas + o já selecionado (não perde o valor)
+  const departmentChoices =
+    form.department && !deptOptions.includes(form.department)
+      ? [...deptOptions, form.department]
+      : deptOptions;
 
   const isProfessor = form.category === "professor";
 
@@ -270,7 +292,7 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
                 onChange={(e) => set("department", e.target.value)}
               >
                 <option value="">Selecione...</option>
-                {DEPARTMENTS.map((d) => (
+                {departmentChoices.map((d) => (
                   <option key={d} value={d}>
                     {d}
                   </option>
@@ -314,7 +336,7 @@ export default function AdminJobForm({ job }: AdminJobFormProps) {
               Selecione uma ou mais unidades para esta vaga.
             </p>
             <div className="flex flex-wrap gap-3">
-              {UNITS.map((u) => {
+              {unitOptions.map((u) => {
                 const selected = selectedUnits.includes(u);
                 return (
                   <label

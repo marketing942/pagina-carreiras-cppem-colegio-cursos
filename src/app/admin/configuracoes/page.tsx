@@ -36,6 +36,22 @@ export default function ConfiguracoesPage() {
     setSettings((s) => ({ ...s, [key]: value }));
   }
 
+  // Gerencia listas (setores / unidades)
+  function addToList(key: "departments" | "units", value: string) {
+    const v = value.trim();
+    if (!v) return;
+    const current = settings[key] ?? [];
+    if (current.includes(v)) return;
+    set(key, [...current, v]);
+  }
+  function removeFromList(key: "departments" | "units", value: string) {
+    const current = settings[key] ?? [];
+    set(
+      key,
+      current.filter((x) => x !== value)
+    );
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
@@ -81,6 +97,29 @@ export default function ConfiguracoesPage() {
               {message}
             </p>
           )}
+
+          {/* Setores e Unidades */}
+          <Card title="Setores e unidades">
+            <p className="text-sm text-brand-500">
+              Gerencie as opções disponíveis ao criar/editar vagas.
+            </p>
+            <div className="grid gap-6 sm:grid-cols-2">
+              <ListEditor
+                label="Setores"
+                items={settings.departments ?? []}
+                onAdd={(v) => addToList("departments", v)}
+                onRemove={(v) => removeFromList("departments", v)}
+                placeholder="Novo setor (ex.: Jurídico)"
+              />
+              <ListEditor
+                label="Unidades"
+                items={settings.units ?? []}
+                onAdd={(v) => addToList("units", v)}
+                onRemove={(v) => removeFromList("units", v)}
+                placeholder="Nova unidade"
+              />
+            </div>
+          </Card>
 
           {/* Página pública */}
           <Card title="Textos da página pública">
@@ -268,6 +307,75 @@ function Field({
     <div>
       <label className="label">{label}</label>
       {children}
+    </div>
+  );
+}
+
+function ListEditor({
+  label,
+  items,
+  onAdd,
+  onRemove,
+  placeholder,
+}: {
+  label: string;
+  items: string[];
+  onAdd: (value: string) => void;
+  onRemove: (value: string) => void;
+  placeholder?: string;
+}) {
+  const [value, setValue] = useState("");
+
+  function handleAdd() {
+    onAdd(value);
+    setValue("");
+  }
+
+  return (
+    <div>
+      <label className="label">{label}</label>
+      <ul className="mb-3 space-y-2">
+        {items.length === 0 && (
+          <li className="text-sm text-brand-400">Nenhum item.</li>
+        )}
+        {items.map((item) => (
+          <li
+            key={item}
+            className="flex items-center justify-between rounded-lg border border-brand-200 bg-white px-3 py-2 text-sm text-brand-800"
+          >
+            <span>{item}</span>
+            <button
+              type="button"
+              onClick={() => onRemove(item)}
+              className="text-red-600 hover:text-red-700"
+              title="Remover"
+            >
+              ✕
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="flex gap-2">
+        <input
+          className="input"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleAdd();
+            }
+          }}
+          placeholder={placeholder}
+        />
+        <button
+          type="button"
+          onClick={handleAdd}
+          className="btn-secondary !py-2 whitespace-nowrap"
+        >
+          Adicionar
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,10 @@
 export type JobCategory = "trabalho" | "professor";
 export type JobStatus = "aberta" | "encerrada" | "pausada" | "rascunho";
-export type WorkType = "presencial" | "hibrido" | "home_office";
+export type WorkType =
+  | "presencial"
+  | "hibrido"
+  | "home_office"
+  | "terceirizado";
 
 export interface Job {
   id: string;
@@ -47,6 +51,9 @@ export interface SiteSettings {
   linktree_unicive_url: string | null;
   // LinkedIn é único para o grupo
   linkedin_url: string | null;
+  // Listas configuráveis (setores e unidades), gerenciadas no admin
+  departments: string[] | null;
+  units: string[] | null;
   // Grupo de WhatsApp para anúncios de vagas
   whatsapp_group_url: string | null;
   address: string | null;
