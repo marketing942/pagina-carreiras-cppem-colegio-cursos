@@ -67,6 +67,9 @@ create table if not exists public.site_settings (
   linktree_colegio_url text,
   linktree_unicive_url text,
   linkedin_url      text,
+  -- Listas configuráveis no admin
+  departments       text[] default array['Marketing','Comercial','Tecnologia','Pedagógico','Serviços Gerais','Administrativo','Financeiro'],
+  units             text[] default array['CPPEM Concursos','Colégio CPPEM','Unicive Caruaru'],
   -- Grupo de WhatsApp para anúncios de vagas
   whatsapp_group_url text default 'https://chat.whatsapp.com/JKlwbSeG38ECLh5UJSRGl3?mode=gi_t',
   address           text default 'Praça Presidente Getúlio Vargas, 1119 – Caruaru, Pernambuco, Prédio de 5 andares',

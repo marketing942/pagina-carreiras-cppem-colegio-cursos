@@ -1,5 +1,6 @@
 import { createClient } from "./supabase/server";
 import type { SiteSettings } from "./types";
+import { DEPARTMENTS, UNITS } from "./constants";
 
 /** Valores padrão usados como fallback caso o Supabase não esteja configurado. */
 export const DEFAULT_SETTINGS: SiteSettings = {
@@ -17,6 +18,8 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   linktree_colegio_url: null,
   linktree_unicive_url: null,
   linkedin_url: null,
+  departments: [...DEPARTMENTS],
+  units: [...UNITS],
   whatsapp_group_url:
     "https://chat.whatsapp.com/JKlwbSeG38ECLh5UJSRGl3?mode=gi_t",
   address:
