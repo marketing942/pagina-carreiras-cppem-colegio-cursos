@@ -23,7 +23,11 @@ export default function Footer({ settings }: FooterProps) {
     <footer className="border-t border-white/10 bg-brand-950 text-brand-100">
       <div className="container-page grid gap-10 py-14 md:grid-cols-3">
         <div>
-          <Logo className="h-11" />
+          <div className="flex items-center gap-3">
+            <Logo variant="cppem" className="h-11" />
+            <span className="h-9 w-px bg-white/25" aria-hidden />
+            <Logo variant="colegio" className="h-11" />
+          </div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-brand-200">
             {settings.footer_description}
           </p>
