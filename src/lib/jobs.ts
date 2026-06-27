@@ -20,7 +20,17 @@ export async function getOpenJobs(): Promise<Job[]> {
       console.error("Erro ao buscar vagas abertas:", error.message);
       return [];
     }
-    return (data as Job[]) ?? [];
+    // Ordena destaques primeiro (sort estável preserva a ordem por data).
+    // Feito em JS para não depender da coluna `featured` existir no banco.
+    const jobs = (data as Job[]) ?? [];
+    return jobs
+      .map((job, index) => ({ job, index }))
+      .sort(
+        (a, b) =>
+          Number(b.job.featured ?? false) - Number(a.job.featured ?? false) ||
+          a.index - b.index
+      )
+      .map((x) => x.job);
   } catch {
     return [];
   }

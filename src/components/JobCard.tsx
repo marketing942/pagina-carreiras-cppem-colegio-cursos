@@ -17,6 +17,11 @@ export default function JobCard({ job }: JobCardProps) {
       className="card group flex flex-col border-brand-200 bg-brand-50 p-6 hover:bg-white"
     >
       <div className="flex flex-wrap items-center gap-2">
+        {job.featured && (
+          <span className="rounded-full bg-accent-500 px-3 py-1 text-xs font-bold text-brand-950">
+            ⭐ Destaque
+          </span>
+        )}
         {tag && (
           <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-700">
             {tag}
@@ -44,12 +49,6 @@ export default function JobCard({ job }: JobCardProps) {
           <span aria-hidden>📍</span>
           <span>{job.location}</span>
         </div>
-        {job.unit && (
-          <div className="flex items-center gap-2">
-            <span aria-hidden>🏢</span>
-            <span>{job.unit}</span>
-          </div>
-        )}
       </dl>
 
       <span className="btn-primary mt-5 w-full justify-center">

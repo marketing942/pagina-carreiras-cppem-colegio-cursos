@@ -24,6 +24,8 @@ export interface Job {
   // Link de candidatura específico desta vaga (opcional).
   // Quando vazio, usa o link geral em site_settings.form_url.
   apply_url: string | null;
+  // Vaga em destaque: aparece primeiro na listagem pública.
+  featured: boolean;
   created_at: string;
   updated_at: string;
 }
