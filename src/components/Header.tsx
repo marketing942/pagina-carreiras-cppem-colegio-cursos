@@ -10,8 +10,10 @@ export default function Header({ formUrl }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-brand-950/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between">
-        <Link href="/carreiras" className="flex items-center">
-          <Logo className="h-9" withWordmark wordmarkClassName="text-brand-100" />
+        <Link href="/carreiras" className="flex items-center gap-3">
+          <Logo variant="cppem" className="h-9" />
+          <span className="h-7 w-px bg-white/25" aria-hidden />
+          <Logo variant="colegio" className="h-9" />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
