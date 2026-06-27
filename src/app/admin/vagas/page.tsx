@@ -1,16 +1,40 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { createClient } from "@/lib/supabase/client";
-import { categoryLabel, statusLabel, STATUS_BADGE } from "@/lib/constants";
+import {
+  CATEGORIES,
+  STATUSES,
+  categoryLabel,
+  statusLabel,
+  parseUnits,
+  STATUS_BADGE,
+} from "@/lib/constants";
 import type { Job, JobStatus } from "@/lib/types";
+
+interface Filters {
+  search: string;
+  category: string;
+  sector: string;
+  unit: string;
+  status: string;
+}
+
+const EMPTY_FILTERS: Filters = {
+  search: "",
+  category: "",
+  sector: "",
+  unit: "",
+  status: "",
+};
 
 export default function VagasPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
+  const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
 
   const supabase = createClient();
 
@@ -58,16 +82,165 @@ export default function VagasPage() {
     setBusy(null);
   }
 
+  // Opções de filtro derivadas das vagas existentes
+  const sectorOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          jobs
+            .map((j) => j.department || j.discipline)
+            .filter(Boolean) as string[]
+        )
+      ).sort(),
+    [jobs]
+  );
+  const unitOptions = useMemo(
+    () => Array.from(new Set(jobs.flatMap((j) => parseUnits(j.unit)))).sort(),
+    [jobs]
+  );
+
+  const set = (key: keyof Filters, value: string) =>
+    setFilters((f) => ({ ...f, [key]: value }));
+
+  const filtered = useMemo(() => {
+    const term = filters.search.trim().toLowerCase();
+    return jobs.filter((job) => {
+      if (filters.category && job.category !== filters.category) return false;
+      if (
+        filters.sector &&
+        (job.department || job.discipline) !== filters.sector
+      )
+        return false;
+      if (filters.unit && !parseUnits(job.unit).includes(filters.unit))
+        return false;
+      if (filters.status && job.status !== filters.status) return false;
+      if (term) {
+        const haystack = [
+          job.title,
+          job.department,
+          job.discipline,
+          job.segment,
+          job.unit,
+          job.location,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (!haystack.includes(term)) return false;
+      }
+      return true;
+    });
+  }, [jobs, filters]);
+
+  const hasFilters =
+    filters.search !== "" ||
+    filters.category !== "" ||
+    filters.sector !== "" ||
+    filters.unit !== "" ||
+    filters.status !== "";
+
   return (
     <AdminLayout title="Vagas">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between gap-4">
         <p className="text-sm text-brand-600">
-          {jobs.length} vaga(s) cadastrada(s)
+          {hasFilters ? (
+            <>
+              <span className="font-semibold text-brand-900">
+                {filtered.length}
+              </span>{" "}
+              de {jobs.length} vaga(s)
+            </>
+          ) : (
+            <>{jobs.length} vaga(s) cadastrada(s)</>
+          )}
         </p>
         <Link href="/admin/vagas/nova" className="btn-primary !py-2">
           + Nova vaga
         </Link>
       </div>
+
+      {/* Busca e filtros */}
+      {jobs.length > 0 && (
+        <div className="card mb-6 p-4">
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand-400">
+              🔍
+            </span>
+            <input
+              type="text"
+              value={filters.search}
+              onChange={(e) => set("search", e.target.value)}
+              placeholder="Buscar por título, setor, unidade, local..."
+              className="input !pl-10"
+            />
+          </div>
+
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <select
+              value={filters.category}
+              onChange={(e) => set("category", e.target.value)}
+              className="input"
+            >
+              <option value="">Todas as categorias</option>
+              {CATEGORIES.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={filters.sector}
+              onChange={(e) => set("sector", e.target.value)}
+              className="input"
+            >
+              <option value="">Todos os setores / disciplinas</option>
+              {sectorOptions.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={filters.unit}
+              onChange={(e) => set("unit", e.target.value)}
+              className="input"
+            >
+              <option value="">Todas as unidades</option>
+              {unitOptions.map((u) => (
+                <option key={u} value={u}>
+                  {u}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={filters.status}
+              onChange={(e) => set("status", e.target.value)}
+              className="input"
+            >
+              <option value="">Todos os status</option>
+              {STATUSES.map((s) => (
+                <option key={s.value} value={s.value}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {hasFilters && (
+            <div className="mt-3 flex justify-end">
+              <button
+                onClick={() => setFilters(EMPTY_FILTERS)}
+                className="btn-secondary !py-2 text-sm"
+              >
+                Limpar filtros
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {loading ? (
         <p className="text-brand-500">Carregando...</p>
@@ -77,6 +250,18 @@ export default function VagasPage() {
           <Link href="/admin/vagas/nova" className="btn-primary mt-4">
             Cadastrar primeira vaga
           </Link>
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="card p-10 text-center">
+          <p className="text-brand-600">
+            Nenhuma vaga encontrada com os filtros selecionados.
+          </p>
+          <button
+            onClick={() => setFilters(EMPTY_FILTERS)}
+            className="btn-secondary mt-4"
+          >
+            Limpar filtros
+          </button>
         </div>
       ) : (
         <div className="card overflow-x-auto">
@@ -93,7 +278,7 @@ export default function VagasPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-brand-100">
-              {jobs.map((job) => (
+              {filtered.map((job) => (
                 <tr key={job.id} className="hover:bg-brand-50/50">
                   <td className="px-4 py-3 font-medium text-brand-900">
                     {job.featured && (
