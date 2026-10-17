@@ -2,10 +2,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
-import StatsSection from "@/components/StatsSection";
 import JobsExplorer from "@/components/JobsExplorer";
-import LinkedInCard from "@/components/LinkedInCard";
-import WhatsAppGroupBanner from "@/components/WhatsAppGroupBanner";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
+import ConnectSection from "@/components/ConnectSection";
 import { getOpenJobs } from "@/lib/jobs";
 import { getSettings } from "@/lib/settings";
 
@@ -24,14 +23,19 @@ export default async function CarreirasPage() {
     <>
       <Header formUrl={settings.form_url} />
       <main>
-        <Hero openJobsCount={jobs.length} areasCount={areasCount} />
-        <StatsSection settings={settings} />
+        <Hero
+          openJobsCount={jobs.length}
+          areasCount={areasCount}
+          stats={[settings.stat_years, settings.stat_students, settings.stat_team, settings.stat_extra].filter(
+            Boolean
+          ) as string[]}
+        />
         <JobsExplorer jobs={jobs} />
         <AboutSection settings={settings} />
-        <WhatsAppGroupBanner url={settings.whatsapp_group_url} />
-        <LinkedInCard url={settings.linkedin_url} />
+        <ConnectSection whatsappUrl={settings.whatsapp_group_url} linkedinUrl={settings.linkedin_url} />
       </main>
       <Footer settings={settings} />
+      <ExitIntentPopup whatsappUrl={settings.whatsapp_group_url} />
     </>
   );
 }

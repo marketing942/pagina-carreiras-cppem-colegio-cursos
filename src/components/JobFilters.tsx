@@ -1,6 +1,7 @@
 "use client";
 
 import { CATEGORIES, WORK_TYPES } from "@/lib/constants";
+import Icon from "./Icon";
 
 export interface FilterState {
   search: string;
@@ -36,9 +37,10 @@ export default function JobFilters({
     <div className="card p-5 sm:p-6">
       {/* Busca */}
       <div className="relative">
-        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-brand-400">
-          🔍
-        </span>
+        <Icon
+          name="search"
+          className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-inkmuted"
+        />
         <input
           type="text"
           value={filters.search}

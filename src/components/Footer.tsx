@@ -1,101 +1,144 @@
 import type { SiteSettings } from "@/lib/types";
+import { BRANDS, type Brand } from "@/lib/constants";
 import Logo from "./Logo";
+import Icon from "./Icon";
+import SocialIcon from "./SocialIcon";
 
 interface FooterProps {
   settings: SiteSettings;
 }
 
-interface FooterLink {
-  label: string;
-  url: string | null;
+/** Cada marca com seu link de "todas as redes" (Linktree) configurável no admin. */
+function linktreeFor(brand: Brand, s: SiteSettings): string | null {
+  if (brand.id === "cppem") return s.linktree_cppem_url;
+  if (brand.id === "colegio") return s.linktree_colegio_url;
+  return s.linktree_unicive_url;
 }
 
-/** Rodapé institucional com links editáveis pela área administrativa. */
+/**
+ * Rodapé institucional: mostra a força do grupo com as redes de cada marca,
+ * além de localização e dados legais.
+ */
 export default function Footer({ settings }: FooterProps) {
-  // Cada marca aponta para seu Linktree (que reúne todas as redes sociais)
-  const brandLinks: FooterLink[] = [
-    { label: "CPPEM Concursos", url: settings.linktree_cppem_url },
-    { label: "Colégio CPPEM", url: settings.linktree_colegio_url },
-    { label: "Unicive Caruaru", url: settings.linktree_unicive_url },
-  ].filter((s) => !!s.url);
+  // LinkedIn do grupo (configurável) substitui o padrão do CPPEM Concursos
+  const brands = BRANDS.map((b) =>
+    b.id === "cppem" && settings.linkedin_url
+      ? {
+          ...b,
+          socials: b.socials.map((s) => (s.key === "linkedin" ? { ...s, href: settings.linkedin_url! } : s)),
+        }
+      : b
+  );
 
   return (
-    <footer className="border-t border-white/10 bg-brand-950 text-brand-100">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-3">
-        <div>
-          <div className="flex items-center gap-3">
-            <Logo variant="cppem" className="h-11" />
-            <span className="h-9 w-px bg-white/25" aria-hidden />
-            <Logo variant="colegio" className="h-11" />
+    <footer className="bg-brand-900 text-brand-100">
+      <div className="h-1 bg-gradient-to-r from-transparent via-accent-500 to-transparent" />
+
+      <div className="container-page py-14 sm:py-16">
+        {/* Topo: marcas + mensagem */}
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="flex items-center gap-4">
+              <Logo variant="cppem" className="h-20" />
+              <span className="h-12 w-px bg-white/25" aria-hidden />
+              <Logo variant="colegio" className="h-20" />
+            </div>
+            <h2 className="mt-6 max-w-xl text-2xl font-extrabold leading-snug text-white sm:text-3xl">
+              Acompanhe o CPPEM em todas as <span className="text-accent-300">nossas redes</span>.
+            </h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-brand-200">
+              {settings.footer_description} Conteúdo, aulas e novidades de cada uma das nossas marcas.
+            </p>
           </div>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-brand-200">
-            {settings.footer_description}
-          </p>
         </div>
 
-        <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-white">
-            Localização
-          </h3>
-          <p className="mt-4 text-sm text-brand-200">{settings.address}</p>
+        {/* Redes de cada marca */}
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {brands.map((brand) => {
+            const linktree = linktreeFor(brand, settings);
+            return (
+              <section key={brand.id} className="flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+                <h3 className="font-display text-lg font-extrabold text-white">{brand.name}</h3>
+                <p className="mt-1 text-sm text-brand-200">{brand.tagline}</p>
+
+                {brand.site && (
+                  <a
+                    href={brand.site.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-300 transition-colors hover:text-accent-200"
+                  >
+                    {brand.site.label}
+                    <Icon name="arrow" className="h-4 w-4 -rotate-45" />
+                  </a>
+                )}
+
+                <div className="mt-5 flex flex-wrap gap-2.5">
+                  {brand.socials.map((s) => (
+                    <a
+                      key={s.key}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${s.label} — ${brand.name}`}
+                      title={s.label}
+                      className="grid h-11 w-11 place-items-center rounded-full border border-accent-300/40 bg-white/5 text-accent-200 transition-all hover:-translate-y-0.5 hover:border-accent-300 hover:bg-accent-300 hover:text-brand-950"
+                    >
+                      <SocialIcon name={s.key} className="h-[18px] w-[18px]" />
+                    </a>
+                  ))}
+                  {brand.socials.length === 0 && !linktree && (
+                    <p className="text-sm text-brand-300">Redes em breve.</p>
+                  )}
+                </div>
+
+                {linktree && (
+                  <a
+                    href={linktree}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto pt-5 text-sm font-semibold text-accent-300 transition-colors hover:text-accent-200"
+                  >
+                    {brand.socials.length > 0 ? "Ver todos os links →" : "Ver todas as redes →"}
+                  </a>
+                )}
+              </section>
+            );
+          })}
+        </div>
+
+        {/* Localização */}
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-accent-200">
+              <Icon name="pin" />
+            </span>
+            <div>
+              <p className="font-eyebrow text-sm font-bold uppercase tracking-[0.16em] text-accent-300">Localização</p>
+              <p className="mt-1 max-w-xl text-sm leading-relaxed text-brand-200">{settings.address}</p>
+            </div>
+          </div>
           {settings.maps_url && (
             <a
               href={settings.maps_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-block text-sm text-accent-300 transition-colors hover:text-accent-200"
+              className="btn-ghost shrink-0 !py-2.5"
             >
-              Ver no mapa →
+              Ver no mapa
             </a>
           )}
-          {settings.linkedin_url && (
-            <a
-              href={settings.linkedin_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 block text-sm text-accent-300 transition-colors hover:text-accent-200"
-            >
-              LinkedIn →
-            </a>
-          )}
-        </div>
-
-        <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-white">
-            Nossas marcas
-          </h3>
-          <p className="mt-1 text-xs text-brand-300">
-            Acompanhe nas redes sociais
-          </p>
-          <ul className="mt-4 space-y-2">
-            {brandLinks.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.url!}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-brand-200 transition-colors hover:text-white"
-                >
-                  {s.label}
-                </a>
-              </li>
-            ))}
-            {brandLinks.length === 0 && (
-              <li className="text-sm text-brand-300">Em breve.</li>
-            )}
-          </ul>
         </div>
       </div>
 
       <div className="border-t border-white/10 py-6">
-        <div className="container-page space-y-1 text-center text-xs text-brand-300">
+        <div className="container-page flex flex-col items-center justify-between gap-2 text-center text-xs text-brand-300 sm:flex-row sm:text-left">
+          <p>
+            © {new Date().getFullYear()} {settings.company_name}. Todos os direitos reservados.
+          </p>
           <p>
             {settings.company_name.toUpperCase()} LTDA
             {settings.cnpj ? ` – CNPJ: ${settings.cnpj}` : ""}
-          </p>
-          <p>
-            © {new Date().getFullYear()} {settings.company_name}. Todos os
-            direitos reservados.
           </p>
         </div>
       </div>

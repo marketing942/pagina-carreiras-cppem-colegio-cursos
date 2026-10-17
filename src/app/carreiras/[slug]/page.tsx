@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JobDetails from "@/components/JobDetails";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
 import { getJobBySlug } from "@/lib/jobs";
 import { getSettings } from "@/lib/settings";
 
@@ -40,6 +41,7 @@ export default async function JobPage({ params }: PageProps) {
         <JobDetails job={job} formUrl={settings.form_url} />
       </main>
       <Footer settings={settings} />
+      <ExitIntentPopup whatsappUrl={settings.whatsapp_group_url} />
     </>
   );
 }

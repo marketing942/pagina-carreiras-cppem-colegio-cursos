@@ -80,15 +80,15 @@ export default function JobsExplorer({ jobs }: JobsExplorerProps) {
   const trabalho = filtered.filter((j) => j.category === "trabalho");
   const professor = filtered.filter((j) => j.category === "professor");
 
+
   return (
-    <section id="vagas" className="bg-white py-16">
+    <section id="vagas" className="scroll-mt-20 py-14 sm:py-20">
       <div className="container-page">
-        <div className="mx-auto mb-8 max-w-2xl text-center">
-          <h2 className="text-3xl font-bold text-brand-950 sm:text-4xl">
-            Encontre sua vaga
-          </h2>
-          <p className="mt-2 text-brand-600">
-            Busque pela oportunidade ideal para você fazer parte da nossa tropa.
+        <div className="mx-auto mb-10 max-w-2xl text-center">
+          <span className="eyebrow">Oportunidades</span>
+          <h2 className="mt-3 text-3xl font-extrabold text-ink sm:text-4xl">Encontre sua vaga</h2>
+          <p className="mt-3 text-inksoft">
+            Busque a oportunidade ideal para você fazer parte da nossa equipe.
           </p>
         </div>
 
@@ -102,19 +102,19 @@ export default function JobsExplorer({ jobs }: JobsExplorerProps) {
         />
 
         {filtered.length === 0 ? (
-          <p className="mt-12 text-center text-brand-500">
-            Nenhuma vaga encontrada com os filtros selecionados.
-          </p>
+          <div className="card mt-10 p-10 text-center text-inksoft">
+            Nenhuma vaga encontrada com os filtros selecionados. Tente limpar a busca.
+          </div>
         ) : (
-          <div className="mt-12 space-y-16">
+          <div className="mt-12 space-y-14">
             <JobGroup
-              title="Encontre sua vaga de Trabalho"
-              subtitle="Vagas administrativas, comerciais, marketing, tecnologia, pedagógico, serviços gerais e demais funções."
+              title="Vagas de Trabalho"
+              subtitle="Administrativo, comercial, marketing, tecnologia, pedagógico, serviços gerais e demais funções."
               jobs={trabalho}
             />
             <JobGroup
-              title="Encontre sua vaga de Professor"
-              subtitle="Vagas para professores, instrutores, tutores e mentores ligados diretamente à docência."
+              title="Vagas de Professor"
+              subtitle="Professores, instrutores, tutores e mentores ligados diretamente à docência."
               jobs={professor}
             />
           </div>
@@ -136,9 +136,14 @@ function JobGroup({
   if (jobs.length === 0) return null;
   return (
     <div>
-      <div className="mb-6 border-l-4 border-accent-500 pl-4">
-        <h3 className="text-2xl font-bold text-brand-950">{title}</h3>
-        <p className="mt-1 text-sm text-brand-600">{subtitle}</p>
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <h3 className="text-2xl font-extrabold text-ink">{title}</h3>
+          <p className="mt-1 text-sm text-inksoft">{subtitle}</p>
+        </div>
+        <span className="rounded-full bg-goldsoft px-3 py-1 text-xs font-bold text-goldink">
+          {jobs.length} {jobs.length === 1 ? "vaga" : "vagas"}
+        </span>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {jobs.map((job) => (
