@@ -25,10 +25,19 @@ const CATEGORY_VALUES = ["trabalho", "professor"];
 const first = (v: string | string[] | undefined) =>
   (Array.isArray(v) ? v[0] : v) ?? "";
 
-/** Acha a opção cujo slug bate com o valor da URL (ex.: "cppem-concursos"). */
+/**
+ * Acha a opção cujo slug bate com o valor da URL (ex.: "cppem-concursos").
+ * Aceita também o começo do nome quando ele identifica uma opção só:
+ * "cppem" -> "CPPEM Concursos", "colegio" -> "Colégio CPPEM",
+ * "unicive" -> "Unicive Caruaru".
+ */
 const matchOption = (options: string[], raw: string) => {
   const target = slugify(raw);
-  return target ? (options.find((o) => slugify(o) === target) ?? "") : "";
+  if (!target) return "";
+  const exact = options.find((o) => slugify(o) === target);
+  if (exact) return exact;
+  const startsWith = options.filter((o) => slugify(o).startsWith(target));
+  return startsWith.length === 1 ? startsWith[0] : "";
 };
 
 /** "home_office" ↔ "home-office" na URL. */

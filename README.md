@@ -202,8 +202,18 @@ Exemplos (combine quantos quiser com `&`):
 /carreiras?categoria=trabalho&setor=marketing&modelo=presencial
 ```
 
+Os filtros funcionam tanto em `/carreiras?...` quanto no endereço raiz do site
+(`/?categoria=professor` redireciona para `/carreiras?categoria=professor`).
+Para unidade e setor vale também o começo do nome, desde que identifique uma
+opção só: `unidade=cppem` → CPPEM Concursos, `unidade=colegio` → Colégio CPPEM,
+`unidade=unicive` → Unicive Caruaru.
+
 Valores que não existirem entre as vagas abertas são ignorados, e outros
 parâmetros do link (como `utm_source`) são preservados.
+
+> Se você usar um encurtador de links ou redirecionamento externo, confira se
+> ele **repassa a query string** (tudo depois do `?`). Se ele descartar, o filtro
+> se perde antes de chegar ao site.
 
 ---
 
