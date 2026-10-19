@@ -179,6 +179,34 @@ Trabalho"** e **"Encontre sua vaga de Professor"**. Apenas vagas com status
 
 ---
 
+## 🔗 Links com filtros (para compartilhar)
+
+Os filtros da página de vagas ficam refletidos na URL. Basta filtrar na página e
+copiar o link do navegador, ou montar o link na mão. Quem abrir já cai nas vagas
+filtradas.
+
+| Parâmetro   | Valores                                                      |
+| ----------- | ------------------------------------------------------------ |
+| `categoria` | `trabalho` ou `professor`                                    |
+| `unidade`   | nome da unidade em minúsculas e com hífen (`cppem-concursos`, `colegio-cppem`, `unicive-caruaru`) |
+| `setor`     | nome do setor (`marketing`, `comercial`, `servicos-gerais`)  |
+| `modelo`    | `presencial`, `hibrido`, `home-office` ou `terceirizado`     |
+| `local`     | local da vaga (`caruaru-pe`)                                 |
+| `busca`     | texto livre                                                  |
+
+Exemplos (combine quantos quiser com `&`):
+
+```
+/carreiras?categoria=professor
+/carreiras?categoria=professor&unidade=colegio-cppem
+/carreiras?categoria=trabalho&setor=marketing&modelo=presencial
+```
+
+Valores que não existirem entre as vagas abertas são ignorados, e outros
+parâmetros do link (como `utm_source`) são preservados.
+
+---
+
 ## 📦 Scripts
 
 | Comando         | Descrição                       |

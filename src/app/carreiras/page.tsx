@@ -7,11 +7,20 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import ConnectSection from "@/components/ConnectSection";
 import { getOpenJobs } from "@/lib/jobs";
 import { getSettings } from "@/lib/settings";
+import type { RawParams } from "@/lib/filter-url";
 
 export const revalidate = 60;
 
-export default async function CarreirasPage() {
-  const [jobs, settings] = await Promise.all([getOpenJobs(), getSettings()]);
+interface PageProps {
+  searchParams: Promise<RawParams>;
+}
+
+export default async function CarreirasPage({ searchParams }: PageProps) {
+  const [jobs, settings, params] = await Promise.all([
+    getOpenJobs(),
+    getSettings(),
+    searchParams,
+  ]);
 
   const areasCount = new Set(
     jobs.map((j) =>
@@ -30,7 +39,7 @@ export default async function CarreirasPage() {
             Boolean
           ) as string[]}
         />
-        <JobsExplorer jobs={jobs} />
+        <JobsExplorer jobs={jobs} initialParams={params} />
         <AboutSection settings={settings} />
         <ConnectSection whatsappUrl={settings.whatsapp_group_url} linkedinUrl={settings.linkedin_url} />
       </main>
