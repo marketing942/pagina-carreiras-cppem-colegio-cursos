@@ -1,13 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Job } from "@/lib/types";
 import { parseUnits } from "@/lib/constants";
+import {
+  applyFiltersToSearch,
+  filtersFromParams,
+  filtersQuery,
+  type FilterOptions,
+  type RawParams,
+} from "@/lib/filter-url";
 import JobCard from "./JobCard";
 import JobFilters, { type FilterState } from "./JobFilters";
 
 interface JobsExplorerProps {
   jobs: Job[];
+  /** Parâmetros da URL (ex.: ?categoria=professor&unidade=cppem-concursos). */
+  initialParams?: RawParams;
 }
 
 const EMPTY: FilterState = {
@@ -19,35 +28,57 @@ const EMPTY: FilterState = {
   location: "",
 };
 
+const uniqueSorted = (values: string[]) => Array.from(new Set(values)).sort();
+
+/** Opções dos filtros, derivadas das vagas disponíveis. */
+function getOptions(jobs: Job[]): FilterOptions {
+  return {
+    departments: uniqueSorted(
+      jobs.map((j) => j.department).filter(Boolean) as string[]
+    ),
+    units: uniqueSorted(jobs.flatMap((j) => parseUnits(j.unit))),
+    locations: uniqueSorted(
+      jobs.map((j) => j.location).filter(Boolean) as string[]
+    ),
+  };
+}
+
 /**
  * Componente cliente que gerencia busca/filtros e agrupa as vagas em
- * dois blocos: "Trabalho" e "Professor".
+ * dois blocos: "Trabalho" e "Professor". Os filtros ficam refletidos na URL
+ * para que qualquer combinação possa ser compartilhada por link.
  */
-export default function JobsExplorer({ jobs }: JobsExplorerProps) {
-  const [filters, setFilters] = useState<FilterState>(EMPTY);
+export default function JobsExplorer({
+  jobs,
+  initialParams = {},
+}: JobsExplorerProps) {
+  const { departments, units, locations } = useMemo(
+    () => getOptions(jobs),
+    [jobs]
+  );
 
-  // Opções dinâmicas a partir das vagas disponíveis
-  const departments = useMemo(
-    () =>
-      Array.from(
-        new Set(jobs.map((j) => j.department).filter(Boolean) as string[])
-      ).sort(),
-    [jobs]
+  // Estado inicial vem da URL (o servidor já renderiza a lista filtrada)
+  const [filters, setFilters] = useState<FilterState>(() =>
+    filtersFromParams(initialParams, getOptions(jobs))
   );
-  const units = useMemo(
-    () =>
-      Array.from(
-        new Set(jobs.flatMap((j) => parseUnits(j.unit)))
-      ).sort(),
-    [jobs]
-  );
-  const locations = useMemo(
-    () =>
-      Array.from(
-        new Set(jobs.map((j) => j.location).filter(Boolean) as string[])
-      ).sort(),
-    [jobs]
-  );
+
+  // Se o link já chegou com filtros, leva a pessoa direto às vagas
+  const arrivedFiltered = useRef(filtersQuery(filters) !== "");
+  useEffect(() => {
+    if (arrivedFiltered.current) {
+      document.getElementById("vagas")?.scrollIntoView();
+    }
+  }, []);
+
+  // Reflete os filtros na URL sem recarregar a página nem poluir o histórico
+  useEffect(() => {
+    const query = applyFiltersToSearch(window.location.search, filters);
+    const url =
+      window.location.pathname +
+      (query ? `?${query}` : "") +
+      window.location.hash;
+    window.history.replaceState(window.history.state, "", url);
+  }, [filters]);
 
   const filtered = useMemo(() => {
     const term = filters.search.trim().toLowerCase();
