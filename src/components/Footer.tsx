@@ -66,7 +66,7 @@ export default function Footer({ settings }: FooterProps) {
                   </a>
                 )}
 
-                <div className="mt-5 flex flex-wrap gap-2.5">
+                <div className="mt-5 flex flex-wrap gap-2">
                   {brand.socials.map((s) => (
                     <a
                       key={s.key}
@@ -75,9 +75,9 @@ export default function Footer({ settings }: FooterProps) {
                       rel="noopener noreferrer"
                       aria-label={`${s.label} — ${brand.name}`}
                       title={s.label}
-                      className="grid h-11 w-11 place-items-center rounded-full border border-accent-300/40 bg-white/5 text-accent-200 transition-all hover:-translate-y-0.5 hover:border-accent-300 hover:bg-accent-300 hover:text-brand-950"
+                      className="grid h-10 w-10 place-items-center rounded-full border border-accent-300/40 bg-white/5 text-accent-200 transition-all hover:-translate-y-0.5 hover:border-accent-300 hover:bg-accent-300 hover:text-brand-950"
                     >
-                      <SocialIcon name={s.key} className="h-[18px] w-[18px]" />
+                      <SocialIcon name={s.key} className="h-[17px] w-[17px]" />
                     </a>
                   ))}
                   {brand.socials.length === 0 && (
