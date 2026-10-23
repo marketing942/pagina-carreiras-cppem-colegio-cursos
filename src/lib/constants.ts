@@ -78,7 +78,7 @@ export const STATUS_BADGE: Record<JobStatus, string> = {
 // Colégio CPPEM: conferido no rodapé de colegio.cppem.com.br.
 // CPPEM Concursos: mesmas redes usadas no site/Central de Ajuda do CPPEM.
 export type SocialKey =
-  | "instagram" | "youtube" | "tiktok" | "threads" | "facebook" | "linkedin" | "whatsapp";
+  | "instagram" | "youtube" | "tiktok" | "threads" | "facebook" | "x" | "linkedin" | "whatsapp";
 
 export interface BrandSocial {
   key: SocialKey;
@@ -106,6 +106,7 @@ export const BRANDS: Brand[] = [
       { key: "tiktok", label: "TikTok", href: "https://www.tiktok.com/@cppemconcursos" },
       { key: "threads", label: "Threads", href: "https://www.threads.net/@cppemconcursos" },
       { key: "facebook", label: "Facebook", href: "https://www.facebook.com/people/Cppem-Cursos-preparat%C3%B3rios/61550943416378/" },
+      { key: "x", label: "X", href: "https://x.com/cppem_concursos" },
       { key: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/cppem" },
     ],
   },
@@ -130,7 +131,11 @@ export const BRANDS: Brand[] = [
     id: "unicive",
     name: "Unicive Caruaru",
     tagline: "Ensino superior EAD",
-    // Perfis da Unicive: adicionar aqui (key, label, href), igual aos das outras marcas.
-    socials: [],
+    socials: [
+      { key: "instagram", label: "Instagram", href: "https://www.instagram.com/unicive.caruaru" },
+      { key: "tiktok", label: "TikTok", href: "https://www.tiktok.com/@unicive.caruaru" },
+      { key: "threads", label: "Threads", href: "https://www.threads.com/@unicive.caruaru" },
+      { key: "facebook", label: "Facebook", href: "https://www.facebook.com/profile.php?id=61558200731928" },
+    ],
   },
 ];
