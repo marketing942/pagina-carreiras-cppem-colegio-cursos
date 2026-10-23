@@ -5,7 +5,6 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import ContentListEditor from "@/components/admin/ContentListEditor";
 import { createClient } from "@/lib/supabase/client";
 import { DEFAULT_FAQ_ITEMS, DEFAULT_PROCESS_STEPS, DEFAULT_WHY_ITEMS } from "@/lib/content-defaults";
-import { UNICIVE_LINKTREE } from "@/lib/constants";
 import type { SiteSettings } from "@/lib/types";
 
 type Editable = Partial<SiteSettings>;
@@ -222,37 +221,9 @@ export default function ConfiguracoesPage() {
             </Field>
           </Card>
 
-          {/* Redes sociais / Linktrees */}
-          <Card title="Redes sociais (Linktree por marca)">
-            <p className="text-sm text-brand-500">
-              Cada link aponta para o Linktree da marca, que reúne todas as
-              redes sociais.
-            </p>
+          {/* Redes sociais e links */}
+          <Card title="Redes sociais e links">
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Linktree — CPPEM Concursos">
-                <input
-                  className="input"
-                  value={settings.linktree_cppem_url ?? ""}
-                  onChange={(e) => set("linktree_cppem_url", e.target.value)}
-                  placeholder="https://linktr.ee/..."
-                />
-              </Field>
-              <Field label="Linktree — Colégio CPPEM">
-                <input
-                  className="input"
-                  value={settings.linktree_colegio_url ?? ""}
-                  onChange={(e) => set("linktree_colegio_url", e.target.value)}
-                  placeholder="https://linktr.ee/..."
-                />
-              </Field>
-              <Field label="Linktree — Unicive Caruaru">
-                <input
-                  className="input"
-                  value={settings.linktree_unicive_url ?? ""}
-                  onChange={(e) => set("linktree_unicive_url", e.target.value)}
-                  placeholder={`Vazio = usa ${UNICIVE_LINKTREE}`}
-                />
-              </Field>
               <Field label="LinkedIn (único do grupo)">
                 <input
                   className="input"

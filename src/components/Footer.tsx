@@ -1,19 +1,12 @@
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/types";
-import { BRANDS, UNICIVE_LINKTREE, type Brand } from "@/lib/constants";
+import { BRANDS } from "@/lib/constants";
 import Logo from "./Logo";
 import Icon from "./Icon";
 import SocialIcon from "./SocialIcon";
 
 interface FooterProps {
   settings: SiteSettings;
-}
-
-/** Cada marca com seu link de "todas as redes" (Linktree) configurável no admin. */
-function linktreeFor(brand: Brand, s: SiteSettings): string | null {
-  if (brand.id === "cppem") return s.linktree_cppem_url;
-  if (brand.id === "colegio") return s.linktree_colegio_url;
-  return s.linktree_unicive_url || UNICIVE_LINKTREE;
 }
 
 /**
@@ -56,7 +49,6 @@ export default function Footer({ settings }: FooterProps) {
         {/* Redes de cada marca */}
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {brands.map((brand) => {
-            const linktree = linktreeFor(brand, settings);
             return (
               <section key={brand.id} className="flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-6">
                 <h3 className="font-display text-lg font-extrabold text-white">{brand.name}</h3>
@@ -88,21 +80,10 @@ export default function Footer({ settings }: FooterProps) {
                       <SocialIcon name={s.key} className="h-[18px] w-[18px]" />
                     </a>
                   ))}
-                  {brand.socials.length === 0 && !linktree && (
+                  {brand.socials.length === 0 && (
                     <p className="text-sm text-brand-300">Redes em breve.</p>
                   )}
                 </div>
-
-                {linktree && (
-                  <a
-                    href={linktree}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-auto pt-5 text-sm font-semibold text-accent-300 transition-colors hover:text-accent-200"
-                  >
-                    {brand.socials.length > 0 ? "Ver todos os links →" : "Ver todas as redes →"}
-                  </a>
-                )}
               </section>
             );
           })}

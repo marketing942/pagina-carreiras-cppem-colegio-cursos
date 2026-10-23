@@ -94,9 +94,6 @@ export interface Brand {
   socials: BrandSocial[];
 }
 
-/** Linktree com todas as redes do polo da Unicive em Caruaru (usado quando o admin não define outro). */
-export const UNICIVE_LINKTREE = "https://linktr.ee/unicivecaruaru";
-
 export const BRANDS: Brand[] = [
   {
     id: "cppem",
@@ -133,8 +130,7 @@ export const BRANDS: Brand[] = [
     id: "unicive",
     name: "Unicive Caruaru",
     tagline: "Ensino superior EAD",
-    // Os perfis individuais ainda não estão aqui: o rodapé mostra o botão "Ver todas as redes"
-    // com o Linktree da Unicive (padrão em UNICIVE_LINKTREE; pode ser trocado em Configurações do admin).
+    // Perfis da Unicive: adicionar aqui (key, label, href), igual aos das outras marcas.
     socials: [],
   },
 ];
