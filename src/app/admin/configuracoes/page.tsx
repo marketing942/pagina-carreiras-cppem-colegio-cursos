@@ -5,6 +5,7 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import ContentListEditor from "@/components/admin/ContentListEditor";
 import { createClient } from "@/lib/supabase/client";
 import { DEFAULT_FAQ_ITEMS, DEFAULT_PROCESS_STEPS, DEFAULT_WHY_ITEMS } from "@/lib/content-defaults";
+import { UNICIVE_LINKTREE } from "@/lib/constants";
 import type { SiteSettings } from "@/lib/types";
 
 type Editable = Partial<SiteSettings>;
@@ -249,7 +250,7 @@ export default function ConfiguracoesPage() {
                   className="input"
                   value={settings.linktree_unicive_url ?? ""}
                   onChange={(e) => set("linktree_unicive_url", e.target.value)}
-                  placeholder="https://linktr.ee/..."
+                  placeholder={`Vazio = usa ${UNICIVE_LINKTREE}`}
                 />
               </Field>
               <Field label="LinkedIn (único do grupo)">

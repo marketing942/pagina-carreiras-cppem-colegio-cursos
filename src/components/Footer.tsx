@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/types";
-import { BRANDS, type Brand } from "@/lib/constants";
+import { BRANDS, UNICIVE_LINKTREE, type Brand } from "@/lib/constants";
 import Logo from "./Logo";
 import Icon from "./Icon";
 import SocialIcon from "./SocialIcon";
@@ -13,7 +13,7 @@ interface FooterProps {
 function linktreeFor(brand: Brand, s: SiteSettings): string | null {
   if (brand.id === "cppem") return s.linktree_cppem_url;
   if (brand.id === "colegio") return s.linktree_colegio_url;
-  return s.linktree_unicive_url;
+  return s.linktree_unicive_url || UNICIVE_LINKTREE;
 }
 
 /**
