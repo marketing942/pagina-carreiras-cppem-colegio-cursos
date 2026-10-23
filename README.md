@@ -99,6 +99,10 @@ supabase/migrations/           → schema, RLS, configurações e vagas (0001–
      unidade (uma vaga pode ter várias unidades).
    - `0007_featured.sql` — adiciona o destaque de vaga (`featured`), que faz a
      vaga aparecer em primeiro na listagem.
+   - `0008_configurable_lists.sql` — setores e unidades editáveis no admin.
+   - `0009_closed_jobs_and_content.sql` — libera a leitura pública de vagas
+     **encerradas** (a página mostra "vaga encerrada" em vez de erro 404) e cria
+     os textos editáveis das seções e o e-mail de privacidade.
 
    > Em uma instalação nova, rodar todos em ordem deixa o banco completo. As
    > migrations são idempotentes (podem ser executadas novamente sem duplicar).
@@ -136,6 +140,25 @@ Crie um arquivo `.env.local` (use `.env.example` como base):
 | `NEXT_PUBLIC_SUPABASE_URL`      | ✅          | URL do projeto Supabase                              |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | ✅          | Chave pública (anon) do Supabase                     |
 | `SUPABASE_SERVICE_ROLE_KEY`     | ❌          | Apenas server-side, se algum dia for necessário      |
+| `NEXT_PUBLIC_SITE_URL`          | ❌          | Endereço público (ex.: `https://vagas.cppem.com.br`) para sitemap, imagens de compartilhamento e dados de vaga. Sem ele, usa o domínio de produção da Vercel |
+
+---
+
+## 🔎 Google, compartilhamento e medição
+
+- **Google Vagas:** cada vaga aberta publica dados estruturados (`JobPosting`),
+  e há `sitemap.xml` e `robots.txt` automáticos. Vagas encerradas e rascunhos
+  não são indexados.
+- **Pré-visualização de links:** ao colar o link no WhatsApp/Instagram aparece
+  uma imagem com as logos e o título da vaga (gerada automaticamente).
+- **Medição:** o site usa o Vercel Web Analytics (sem cookies). Para ver os
+  números, abra o projeto na Vercel → aba **Analytics** → **Enable**. Os cliques
+  em "Candidatar-se", WhatsApp, LinkedIn e "Compartilhar" são enviados como
+  eventos; a contagem de eventos depende do plano da Vercel.
+- **Textos editáveis:** em Admin → Configurações é possível editar "Por que
+  trabalhar no CPPEM", "Como funciona" e "Perguntas frequentes". O texto da
+  Política de Privacidade fica em `src/app/privacidade/page.tsx`; o e-mail de
+  contato dela é o campo "E-mail para pedidos de privacidade" nas Configurações.
 
 ---
 

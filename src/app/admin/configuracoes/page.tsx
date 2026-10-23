@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
+import ContentListEditor from "@/components/admin/ContentListEditor";
 import { createClient } from "@/lib/supabase/client";
+import { DEFAULT_FAQ_ITEMS, DEFAULT_PROCESS_STEPS, DEFAULT_WHY_ITEMS } from "@/lib/content-defaults";
 import type { SiteSettings } from "@/lib/types";
 
 type Editable = Partial<SiteSettings>;
@@ -119,6 +121,41 @@ export default function ConfiguracoesPage() {
                 placeholder="Nova unidade"
               />
             </div>
+          </Card>
+
+          {/* Seções da página pública */}
+          <Card title="Por que trabalhar no CPPEM (cards)">
+            <ContentListEditor
+              items={settings.why_items}
+              defaults={DEFAULT_WHY_ITEMS}
+              onChange={(v) => set("why_items", v)}
+              titleLabel="Título do card"
+              textLabel="Texto do card"
+              addLabel="Adicionar card"
+              withIcon
+            />
+          </Card>
+
+          <Card title="Como funciona o processo seletivo (etapas)">
+            <ContentListEditor
+              items={settings.process_steps}
+              defaults={DEFAULT_PROCESS_STEPS}
+              onChange={(v) => set("process_steps", v)}
+              titleLabel="Nome da etapa"
+              textLabel="O que acontece nessa etapa"
+              addLabel="Adicionar etapa"
+            />
+          </Card>
+
+          <Card title="Perguntas frequentes">
+            <ContentListEditor
+              items={settings.faq_items}
+              defaults={DEFAULT_FAQ_ITEMS}
+              onChange={(v) => set("faq_items", v)}
+              titleLabel="Pergunta"
+              textLabel="Resposta"
+              addLabel="Adicionar pergunta"
+            />
           </Card>
 
           {/* Página pública */}
@@ -261,6 +298,15 @@ export default function ConfiguracoesPage() {
                 />
               </Field>
             </div>
+            <Field label="E-mail para pedidos de privacidade (aparece na Política de Privacidade)">
+              <input
+                type="email"
+                className="input"
+                value={settings.privacy_email ?? ""}
+                onChange={(e) => set("privacy_email", e.target.value)}
+                placeholder="privacidade@seudominio.com.br"
+              />
+            </Field>
             <Field label="Descrição do rodapé">
               <textarea
                 className="input min-h-20"

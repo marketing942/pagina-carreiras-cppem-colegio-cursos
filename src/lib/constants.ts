@@ -49,10 +49,11 @@ export function parseUnits(unit?: string | null): string[] {
 }
 
 // Logos oficiais (originais dos brandbooks CPPEM e Colégio)
-export const LOGO_CPPEM =
-  "https://raw.githubusercontent.com/marketing942/fotos-dos-bots/main/LOGO%20CPPEM.png";
-export const LOGO_COLEGIO =
-  "https://raw.githubusercontent.com/marketing942/fotos-dos-bots/main/LOGO%20COLE%CC%81GIO.png";
+// Guardadas em /public/logos (versões reduzidas das originais: 480x480).
+// Antes eram carregadas de um repositório externo do GitHub, o que deixava o
+// site dependente dele e baixava arquivos de vários MB.
+export const LOGO_CPPEM = "/logos/cppem.png";
+export const LOGO_COLEGIO = "/logos/colegio.png";
 
 export function workTypeLabel(value?: WorkType | null): string {
   return WORK_TYPES.find((w) => w.value === value)?.label ?? "";

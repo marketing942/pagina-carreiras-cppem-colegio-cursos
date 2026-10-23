@@ -1,4 +1,5 @@
-import { createClient } from "./supabase/server";
+import { cache } from "react";
+import { createPublicClient, HAS_SUPABASE } from "./supabase/public";
 import type { SiteSettings } from "./types";
 import { DEPARTMENTS, UNITS } from "./constants";
 
@@ -28,15 +29,23 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   maps_url: "https://links.cppem.com.br/localiza%C3%A7%C3%A3o-maps",
   footer_description:
     "Há mais de 7 anos transformando vidas por meio da educação.",
+  privacy_email: null,
+  why_items: null,
+  process_steps: null,
+  faq_items: null,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };
 
-/** Busca as configurações do site (linha única). */
-export async function getSettings(): Promise<SiteSettings> {
+/**
+ * Busca as configurações do site (linha única). Campos que ainda não existem
+ * no banco (migration pendente) caem nos valores padrão.
+ * `cache` evita consultar duas vezes na mesma requisição.
+ */
+export const getSettings = cache(async (): Promise<SiteSettings> => {
+  if (!HAS_SUPABASE) return DEFAULT_SETTINGS;
   try {
-    const supabase = await createClient();
-    const { data, error } = await supabase
+    const { data, error } = await createPublicClient()
       .from("site_settings")
       .select("*")
       .limit(1)
@@ -45,8 +54,8 @@ export async function getSettings(): Promise<SiteSettings> {
     if (error || !data) {
       return DEFAULT_SETTINGS;
     }
-    return data as SiteSettings;
+    return { ...DEFAULT_SETTINGS, ...(data as Partial<SiteSettings>) } as SiteSettings;
   } catch {
     return DEFAULT_SETTINGS;
   }
-}
+});

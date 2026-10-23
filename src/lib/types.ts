@@ -36,6 +36,14 @@ export interface Job {
 
 export type JobInput = Omit<Job, "id" | "created_at" | "updated_at">;
 
+/** Item de conteúdo editável no admin (cards, etapas do processo, perguntas). */
+export interface ContentItem {
+  title: string;
+  text: string;
+  /** Ícone do card (só usado em "Por que trabalhar no CPPEM"). */
+  icon?: string;
+}
+
 export interface SiteSettings {
   id: string;
   company_name: string;
@@ -60,6 +68,12 @@ export interface SiteSettings {
   cnpj: string | null;
   maps_url: string | null;
   footer_description: string | null;
+  // E-mail para solicitações de privacidade (aparece na Política de Privacidade)
+  privacy_email: string | null;
+  // Textos editáveis das seções da página. Vazio (null) = usa o texto padrão.
+  why_items: ContentItem[] | null;
+  process_steps: ContentItem[] | null;
+  faq_items: ContentItem[] | null;
   created_at: string;
   updated_at: string;
 }

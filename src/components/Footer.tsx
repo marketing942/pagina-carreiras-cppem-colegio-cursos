@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { SiteSettings } from "@/lib/types";
 import { BRANDS, type Brand } from "@/lib/constants";
 import Logo from "./Logo";
@@ -136,9 +137,17 @@ export default function Footer({ settings }: FooterProps) {
           <p>
             © {new Date().getFullYear()} {settings.company_name}. Todos os direitos reservados.
           </p>
-          <p>
-            {settings.company_name.toUpperCase()} LTDA
-            {settings.cnpj ? ` – CNPJ: ${settings.cnpj}` : ""}
+          <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-end">
+            <span>
+              {settings.company_name.toUpperCase()} LTDA
+              {settings.cnpj ? ` – CNPJ: ${settings.cnpj}` : ""}
+            </span>
+            <Link
+              href="/privacidade"
+              className="font-semibold text-accent-300 underline underline-offset-4 transition-colors hover:text-accent-200"
+            >
+              Política de Privacidade
+            </Link>
           </p>
         </div>
       </div>

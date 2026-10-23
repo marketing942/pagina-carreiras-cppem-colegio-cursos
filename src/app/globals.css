@@ -84,6 +84,36 @@ html[data-theme="dark"] {
   }
 }
 
+/* Acessibilidade: contorno visível ao navegar pelo teclado (não aparece ao clicar com o mouse) */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid rgb(var(--c-goldink));
+  outline-offset: 2px;
+}
+/* O conteúdo principal recebe foco só pelo atalho "Pular para o conteúdo", sem contorno */
+main:focus {
+  outline: none;
+}
+
+/* Acessibilidade: quem pede "reduzir movimento" no aparelho não vê animações nem rolagem suave */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Conteúdo rico (negrito, itálico, listas) — editor e exibição pública */
 .richtext strong,
 .richtext b {
