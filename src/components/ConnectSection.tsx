@@ -1,4 +1,5 @@
 import Icon from "./Icon";
+import TrackedLink from "./TrackedLink";
 
 interface ConnectSectionProps {
   whatsappUrl: string | null;
@@ -29,9 +30,17 @@ export default function ConnectSection({ whatsappUrl, linkedinUrl }: ConnectSect
                   </p>
                 </div>
               </div>
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-primary self-start">
+              <TrackedLink
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                event="whatsapp_grupo"
+                eventProps={{ local: "secao" }}
+                className="btn-primary self-start"
+              >
                 Entrar no grupo
-              </a>
+                <span className="sr-only"> (abre em nova aba)</span>
+              </TrackedLink>
             </div>
           )}
           {linkedinUrl && (
@@ -47,9 +56,17 @@ export default function ConnectSection({ whatsappUrl, linkedinUrl }: ConnectSect
                   </p>
                 </div>
               </div>
-              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="btn-ghost self-start">
+              <TrackedLink
+                href={linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                event="linkedin"
+                eventProps={{ local: "secao" }}
+                className="btn-ghost self-start"
+              >
                 Seguir no LinkedIn
-              </a>
+                <span className="sr-only"> (abre em nova aba)</span>
+              </TrackedLink>
             </div>
           )}
         </div>

@@ -20,7 +20,7 @@ const SRC: Record<LogoVariant, { src: string; alt: string }> = {
 
 /**
  * Logo oficial (original dos brandbooks CPPEM / Colégio).
- * Usa <img> simples por se tratar de um asset remoto de logo.
+ * Arquivos locais em /public/logos (480x480), já otimizados.
  */
 export default function Logo({
   variant = "cppem",
@@ -35,6 +35,9 @@ export default function Logo({
       <img
         src={src}
         alt={alt}
+        width={480}
+        height={480}
+        decoding="async"
         className={`${className} w-auto object-contain`}
       />
       {withWordmark && (

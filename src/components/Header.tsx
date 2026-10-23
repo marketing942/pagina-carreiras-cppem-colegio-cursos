@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
+import TrackedLink from "./TrackedLink";
 
 interface HeaderProps {
   formUrl: string;
@@ -19,9 +20,17 @@ export default function Header({ formUrl }: HeaderProps) {
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <ThemeToggle />
-          <a href={formUrl} target="_blank" rel="noopener noreferrer" className="btn-primary whitespace-nowrap !px-4 !py-2.5 sm:!px-5">
+          <TrackedLink
+            href={formUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            event="candidatar"
+            eventProps={{ local: "cabecalho" }}
+            className="btn-primary whitespace-nowrap !px-4 !py-2.5 sm:!px-5"
+          >
             Candidatar-se
-          </a>
+            <span className="sr-only"> (abre em nova aba)</span>
+          </TrackedLink>
         </div>
       </div>
     </header>

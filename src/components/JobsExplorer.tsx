@@ -132,6 +132,13 @@ export default function JobsExplorer({
           locations={locations}
         />
 
+        {/* Anunciado por leitores de tela a cada mudança de busca/filtro */}
+        <p role="status" aria-live="polite" className="sr-only">
+          {filtered.length === 0
+            ? "Nenhuma vaga encontrada."
+            : `${filtered.length} ${filtered.length === 1 ? "vaga encontrada" : "vagas encontradas"}.`}
+        </p>
+
         {filtered.length === 0 ? (
           <div className="card mt-10 p-10 text-center text-inksoft">
             Nenhuma vaga encontrada com os filtros selecionados. Tente limpar a busca.

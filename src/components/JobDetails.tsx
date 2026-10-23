@@ -3,6 +3,9 @@ import type { Job } from "@/lib/types";
 import { categoryLabel, parseUnits, workTypeLabel } from "@/lib/constants";
 import { looksLikeHtml, sanitizeHtml } from "@/lib/sanitize";
 import Icon, { type IconName } from "./Icon";
+import ShareJob from "./ShareJob";
+import TrackedLink from "./TrackedLink";
+import PrivacyNote from "./PrivacyNote";
 
 interface JobDetailsProps {
   job: Job;
@@ -82,10 +85,20 @@ export default function JobDetails({ job, formUrl }: JobDetailsProps) {
           {job.short_description && (
             <p className="mt-4 max-w-2xl text-lg text-brand-100">{job.short_description}</p>
           )}
-          <a href={applyUrl} target="_blank" rel="noopener noreferrer" className="btn-primary mt-7">
+          <TrackedLink
+            href={applyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            event="candidatar"
+            eventProps={{ vaga: job.slug, local: "topo" }}
+            className="btn-primary mt-7"
+          >
             Candidatar-se agora
+            <span className="sr-only"> (abre em nova aba)</span>
             <Icon name="arrow" className="h-4 w-4" />
-          </a>
+          </TrackedLink>
+          <PrivacyNote className="mt-3 max-w-md text-xs text-brand-200" linkClassName="underline hover:text-white" />
+          <ShareJob title={job.title} slug={job.slug} />
         </div>
       </div>
       <div className="h-8 -mt-8 rounded-t-[36px] bg-canvas relative" />
@@ -119,12 +132,21 @@ export default function JobDetails({ job, formUrl }: JobDetailsProps) {
               </dl>
             </div>
 
-            <a href={applyUrl} target="_blank" rel="noopener noreferrer" className="btn-primary w-full">
+            <TrackedLink
+              href={applyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              event="candidatar"
+              eventProps={{ vaga: job.slug, local: "lateral" }}
+              className="btn-primary w-full"
+            >
               Candidatar-se agora
-            </a>
+              <span className="sr-only"> (abre em nova aba)</span>
+            </TrackedLink>
             <p className="text-center text-xs text-inkmuted">
               Você será direcionado ao nosso formulário de candidatura.
             </p>
+            <PrivacyNote className="text-center text-xs text-inkmuted" linkClassName="underline hover:text-ink" />
           </div>
         </aside>
       </div>
