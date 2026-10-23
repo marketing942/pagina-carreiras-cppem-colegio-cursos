@@ -9,18 +9,15 @@ interface ShareJobProps {
   slug: string;
 }
 
-// Valores que só existem no navegador. O servidor devolve "" / false, e o
+// O endereço do site só existe no navegador. O servidor devolve "" e o
 // navegador troca pelo valor real sem causar diferença na hidratação.
 const subscribe = () => () => {};
 const getOrigin = () => window.location.origin;
 const getServerOrigin = () => "";
-const getCanShare = () => typeof navigator.share === "function";
-const getServerCanShare = () => false;
 
-/** Botões para compartilhar a vaga: copiar link, WhatsApp e menu do celular (quando existir). */
+/** Botões para compartilhar a vaga: copiar link e WhatsApp. */
 export default function ShareJob({ title, slug }: ShareJobProps) {
   const origin = useSyncExternalStore(subscribe, getOrigin, getServerOrigin);
-  const canNativeShare = useSyncExternalStore(subscribe, getCanShare, getServerCanShare);
   const [status, setStatus] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -48,15 +45,6 @@ export default function ShareJob({ title, slug }: ShareJobProps) {
     }
   }
 
-  async function nativeShare() {
-    trackEvent("compartilhar_vaga", { vaga: slug, canal: "menu" });
-    try {
-      await navigator.share({ title, url: link });
-    } catch {
-      // a pessoa fechou o menu de compartilhar
-    }
-  }
-
   const btn =
     "inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60";
 
@@ -76,11 +64,6 @@ export default function ShareJob({ title, slug }: ShareJobProps) {
         <Icon name="chat" className="h-4 w-4" /> WhatsApp
         <span className="sr-only"> (abre em nova aba)</span>
       </a>
-      {canNativeShare && (
-        <button type="button" onClick={nativeShare} className={btn}>
-          <Icon name="arrow" className="h-4 w-4 -rotate-45" /> Mais opções
-        </button>
-      )}
       <span role="status" aria-live="polite" className="text-sm font-semibold text-accent-200">
         {status}
       </span>
